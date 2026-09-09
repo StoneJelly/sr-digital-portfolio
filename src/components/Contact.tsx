@@ -19,8 +19,8 @@ const contactOptions = [
   {
     icon: Mail,
     title: "Email",
-    detail: "sebastianraj2003@gmail.com",
-    href: "mailto:sebastianraj2003@gmail.com",
+    detail: "srdigitalsolutions22@gmail.com",
+    href: "mailto:srdigitalsolutions22@gmail.com",
     color: "text-accent",
   },
 ];
