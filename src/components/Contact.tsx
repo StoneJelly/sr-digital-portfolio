@@ -36,10 +36,10 @@ const projectTypes = [
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    from_name: "",
+    from_email: "",
     business: "",
-    projectType: "",
+    project_type: "",
     message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -48,11 +48,11 @@ export default function Contact() {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
-      newErrors.email = "Invalid email address";
-    if (!formData.projectType) newErrors.projectType = "Select a project type";
+    if (!formData.from_name.trim()) newErrors.from_name = "Name is required";
+    if (!formData.from_email.trim()) newErrors.from_email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.from_email))
+      newErrors.from_email = "Invalid email address";
+    if (!formData.project_type) newErrors.project_type = "Select a project type";
     if (!formData.message.trim()) newErrors.message = "Message is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -71,7 +71,7 @@ export default function Contact() {
         emailjsConfig.publicKey
       );
       setShowSuccess(true);
-      setFormData({ name: "", email: "", business: "", projectType: "", message: "" });
+      setFormData({ from_name: "", from_email: "", business: "", project_type: "", message: "" });
       if (formRef.current) formRef.current.reset();
     } catch {
       alert("Failed to send message. Please try again or contact us via WhatsApp.");
@@ -146,14 +146,14 @@ export default function Contact() {
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="from_name"
+                  value={formData.from_name}
                   onChange={handleChange}
                   className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors"
                   placeholder="Your name"
                 />
-                {errors.name && (
-                  <p className="text-red-400 text-xs mt-1">{errors.name}</p>
+                {errors.from_name && (
+                  <p className="text-red-400 text-xs mt-1">{errors.from_name}</p>
                 )}
               </div>
               <div>
@@ -162,14 +162,14 @@ export default function Contact() {
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
+                  name="from_email"
+                  value={formData.from_email}
                   onChange={handleChange}
                   className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors"
                   placeholder="your@email.com"
                 />
-                {errors.email && (
-                  <p className="text-red-400 text-xs mt-1">{errors.email}</p>
+                {errors.from_email && (
+                  <p className="text-red-400 text-xs mt-1">{errors.from_email}</p>
                 )}
               </div>
             </div>
@@ -193,8 +193,8 @@ export default function Contact() {
                 Project Type *
               </label>
               <select
-                name="projectType"
-                value={formData.projectType}
+                name="project_type"
+                value={formData.project_type}
                 onChange={handleChange}
                 className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer"
               >
@@ -205,9 +205,9 @@ export default function Contact() {
                   </option>
                 ))}
               </select>
-              {errors.projectType && (
+              {errors.project_type && (
                 <p className="text-red-400 text-xs mt-1">
-                  {errors.projectType}
+                  {errors.project_type}
                 </p>
               )}
             </div>
