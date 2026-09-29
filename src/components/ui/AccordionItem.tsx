@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useId, useState } from "react";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AccordionItemProps {
@@ -11,30 +11,57 @@ interface AccordionItemProps {
 
 export default function AccordionItem({ question, answer }: AccordionItemProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const id = useId();
+  const buttonId = `${id}-trigger`;
+  const panelId = `${id}-panel`;
 
   return (
-    <div className="border border-border rounded-xl overflow-hidden">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 sm:p-6 text-left bg-surface hover:bg-surface-hover transition-colors cursor-pointer"
-      >
-        <span className="font-medium text-foreground pr-4">{question}</span>
-        <ChevronDown
-          className={cn(
-            "w-5 h-5 text-text-secondary shrink-0 transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
-        />
-      </button>
+    <div>
+      <h3 className="font-sans">
+        <button
+          id={buttonId}
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          onClick={() => setIsOpen((open) => !open)}
+          className="group flex w-full items-center justify-between gap-6 px-5 py-5 text-left transition-colors hover:bg-surface-hover sm:px-7 sm:py-6 cursor-pointer"
+        >
+          <span className="text-base font-medium leading-snug text-foreground sm:text-lg">
+            {question}
+          </span>
+          <span
+            aria-hidden="true"
+            className={cn(
+              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-[background-color,border-color,color] duration-200",
+              isOpen
+                ? "border-accent/30 bg-accent-soft text-accent"
+                : "border-border bg-surface text-text-secondary group-hover:border-border-strong group-hover:text-foreground"
+            )}
+          >
+            <Plus
+              className={cn(
+                "h-4 w-4 transition-transform duration-200 ease-out",
+                isOpen && "rotate-45"
+              )}
+            />
+          </span>
+        </button>
+      </h3>
       <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
         className={cn(
-          "overflow-hidden transition-all duration-300",
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          "grid transition-[grid-template-rows] duration-300 ease-out",
+          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
+        inert={!isOpen}
       >
-        <p className="px-5 sm:px-6 pb-5 sm:pb-6 text-text-secondary leading-relaxed">
-          {answer}
-        </p>
+        <div className="overflow-hidden">
+          <p className="max-w-2xl px-5 pb-6 pr-16 leading-relaxed text-text-secondary sm:px-7 sm:pr-20">
+            {answer}
+          </p>
+        </div>
       </div>
     </div>
   );
