@@ -103,33 +103,49 @@ function formatTime(minutes) {
 }
 
 // Opening hours: Tue–Fri 10:00–20:00, Sat–Sun 9:30–19:00, Mon closed.
-// Last bookable slot is one hour before closing.
-function slotsFor(day) {
+// Last bookable slot is one hour before closing. Slots starting less than
+// 30 minutes from now are hidden when the chosen date is today.
+function slotsFor(date) {
+  const day = date.getDay();
   if (day === 1) return [];
   const weekend = day === 0 || day === 6;
   const start = weekend ? 9 * 60 + 30 : 10 * 60;
   const lastSlot = weekend ? 18 * 60 : 19 * 60;
+  const now = new Date();
+  const earliest = toISODate(date) === toISODate(now)
+    ? now.getHours() * 60 + now.getMinutes() + 30
+    : 0;
   const slots = [];
-  for (let t = start; t <= lastSlot; t += 30) slots.push(formatTime(t));
+  for (let t = start; t <= lastSlot; t += 30) {
+    if (t >= earliest) slots.push(formatTime(t));
+  }
   return slots;
 }
 
+// Recomputed on every use so a tab left open past midnight stays correct.
+function refreshDateBounds() {
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 60);
+  dateEl.min = toISODate(today);
+  dateEl.max = toISODate(maxDate);
+}
+
 function populateTimes() {
+  refreshDateBounds();
   const previous = timeEl.value;
-  const day = dateEl.value ? parseISODate(dateEl.value).getDay() : 2;
-  const slots = slotsFor(day);
+  // Before a date is picked, preview a regular weekday's slots.
+  const date = dateEl.value ? parseISODate(dateEl.value) : new Date(2026, 0, 6);
+  const slots = slotsFor(date);
 
   timeEl.length = 1; // keep the placeholder option
   slots.forEach((label) => timeEl.add(new Option(label, label)));
   timeEl.disabled = slots.length === 0;
-  timeEl.options[0].textContent = slots.length ? 'Select a time' : 'Closed on Mondays';
+  let placeholder = 'Select a time';
+  if (!slots.length) placeholder = date.getDay() === 1 ? 'Closed on Mondays' : 'No slots left today';
+  timeEl.options[0].textContent = placeholder;
   if (slots.includes(previous)) timeEl.value = previous;
 }
 
-const today = new Date();
-const maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 60);
-dateEl.min = toISODate(today);
-dateEl.max = toISODate(maxDate);
 populateTimes();
 
 function showError(message, field) {
@@ -157,6 +173,7 @@ form.addEventListener('submit', (e) => {
   if (!serviceEl.value) return showError('Please choose a service.', serviceEl);
   if (!dateEl.value) return showError('Please choose a preferred date.', dateEl);
 
+  populateTimes(); // refresh date bounds and drop slots that have passed
   const chosen = parseISODate(dateEl.value);
   if (dateEl.value < dateEl.min || dateEl.value > dateEl.max) {
     return showError('Please choose a date within the next 60 days.', dateEl);
