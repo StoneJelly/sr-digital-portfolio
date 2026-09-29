@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Check } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import { projects } from "@/data/projects";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-// Mirrors the primary Button styles. The demo is a same-origin static file, so
-// it needs a plain <a target="_blank"> (Button would route it through next/link).
+// Mirrors the primary (ink) Button styles. The demo is a same-origin static file,
+// so it needs a plain <a target="_blank"> (Button would route it through next/link).
 const demoLinkClasses =
-  "inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] bg-accent px-5 text-sm font-semibold text-white shadow-[var(--shadow-sm)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-px hover:bg-accent-hover hover:shadow-[var(--shadow-md)] active:translate-y-0";
+  "inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-transparent bg-foreground px-5 text-[0.8125rem] font-bold text-white transition-[background-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-accent active:translate-y-0";
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -48,25 +48,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <Navbar />
       <main className="flex-1 bg-background pt-28 pb-20 sm:pt-36 lg:pb-28">
         <div className="container-page">
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary transition-colors hover:text-foreground"
-          >
+          <Link href="/#projects" className="text-link text-text-secondary">
             <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-            <span className="link-underline">Back to Projects</span>
+            Back to Projects
           </Link>
 
-          <header className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <header className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="min-w-0">
-              <span className="inline-block rounded-full border border-border bg-surface px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-text-tertiary shadow-[var(--shadow-xs)]">
+              <p className="eyebrow">
                 CONCEPT PROJECT
-              </span>
-              <h1 className="mt-4 text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl">
+                <span aria-hidden="true" className="text-border-strong">/</span>
+                <span className="text-text-secondary">{project.category}</span>
+              </p>
+              <h1 className="mt-5 text-[clamp(2.75rem,7vw,5.25rem)] font-bold leading-[0.98] tracking-[-0.06em] text-foreground">
                 {project.name}
               </h1>
-              <p className="mt-3 text-base font-medium text-accent sm:text-lg">
-                {project.category}
-              </p>
             </div>
 
             {(project.demo || project.github) && (
@@ -78,8 +74,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                     rel="noopener noreferrer"
                     className={demoLinkClasses}
                   >
-                    <ExternalLink aria-hidden="true" className="h-4 w-4" />
                     Open Full Demo
+                    <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
                   </a>
                 )}
                 {project.github && (
@@ -92,16 +88,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
           </header>
 
-          <div className="mt-10 overflow-hidden rounded-2xl border border-border bg-surface shadow-[var(--shadow-lg)] sm:mt-12">
-            <div className="flex items-center gap-3 border-b border-border bg-surface-muted px-4 py-3">
-              <div className="flex shrink-0 gap-1.5" aria-hidden="true">
-                <span className="h-2.5 w-2.5 rounded-full bg-border-strong" />
-                <span className="h-2.5 w-2.5 rounded-full bg-border-strong" />
-                <span className="h-2.5 w-2.5 rounded-full bg-border-strong" />
+          <div className="mt-12 border border-border-strong bg-surface shadow-[var(--shadow-lg)] sm:mt-14">
+            <div className="flex h-10 items-center gap-4 border-b border-border px-4">
+              <div className="flex shrink-0 gap-1" aria-hidden="true">
+                <span className="h-[5px] w-[5px] rounded-full bg-border-strong" />
+                <span className="h-[5px] w-[5px] rounded-full bg-border-strong" />
+                <span className="h-[5px] w-[5px] rounded-full bg-border-strong" />
               </div>
-              <div className="min-w-0 flex-1 truncate rounded-md border border-border bg-surface px-3 py-1 text-xs text-text-tertiary">
-                {project.demo ?? `/projects/${project.slug}`}
-              </div>
+              <span className="min-w-0 flex-1 truncate text-[10px] uppercase tracking-[0.12em] text-text-tertiary">
+                {project.demo ?? project.category}
+              </span>
             </div>
             {project.demo ? (
               <div className="aspect-[4/3] w-full sm:aspect-video">
@@ -114,40 +110,40 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </div>
             ) : (
               <div className="flex aspect-video items-center justify-center bg-surface-muted">
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl border border-border bg-surface shadow-[var(--shadow-xs)]">
-                    <span aria-hidden="true" className="font-display text-3xl font-bold text-accent">
-                      {project.name.charAt(0)}
-                    </span>
-                  </div>
-                  <span className="text-sm text-text-secondary">{project.category}</span>
-                </div>
+                <span aria-hidden="true" className="text-5xl font-bold text-accent">
+                  {project.name.charAt(0)}
+                </span>
               </div>
             )}
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-12 lg:mt-20 lg:grid-cols-[1fr_20rem] lg:gap-16">
-            <div className="space-y-10">
-              {contentSections.map((section) => (
-                <section key={section.title}>
-                  <h2 className="eyebrow mb-3">{section.title}</h2>
-                  <p className="max-w-prose text-base leading-relaxed text-text-secondary sm:text-lg">
-                    {section.body}
-                  </p>
+          <div className="mt-16 grid grid-cols-1 gap-12 lg:mt-24 lg:grid-cols-[1fr_20rem] lg:gap-20">
+            <div className="border-t border-border">
+              {contentSections.map((section, i) => (
+                <section key={section.title} className="flex gap-5 border-b border-border py-7">
+                  <span className="pt-1 text-[11px] font-bold text-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0">
+                    <h2 className="text-lg font-bold tracking-[-0.02em] text-foreground">
+                      {section.title}
+                    </h2>
+                    <p className="mt-2 max-w-prose text-[15px] leading-relaxed text-text-secondary">
+                      {section.body}
+                    </p>
+                  </div>
                 </section>
               ))}
             </div>
 
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="rounded-2xl border border-border bg-surface p-6 shadow-[var(--shadow-sm)]">
+              <div className="rounded-[var(--radius-card)] border border-border bg-surface p-6">
                 <section>
-                  <h2 className="text-base font-bold text-foreground">Features</h2>
+                  <h2 className="eyebrow">Features</h2>
                   <ul className="mt-4 space-y-3">
                     {project.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3 text-sm text-text-secondary">
-                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-soft">
-                          <Check aria-hidden="true" className="h-3 w-3 text-accent" strokeWidth={3} />
-                        </span>
+                        <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" strokeWidth={2.5} />
                         {feature}
                       </li>
                     ))}
@@ -155,12 +151,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </section>
 
                 <section className="mt-6 border-t border-border pt-6">
-                  <h2 className="text-base font-bold text-foreground">Technologies</h2>
-                  <ul className="mt-4 flex flex-wrap gap-2">
+                  <h2 className="eyebrow">Technologies</h2>
+                  <ul className="mt-4 flex flex-wrap gap-[7px]">
                     {project.technologies.map((tech) => (
                       <li
                         key={tech}
-                        className="rounded-full border border-border bg-surface-muted px-3 py-1 text-xs font-medium text-text-secondary"
+                        className="border border-border px-2 py-1 text-[11px] text-text-secondary"
                       >
                         {tech}
                       </li>
