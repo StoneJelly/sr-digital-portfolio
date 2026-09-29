@@ -18,9 +18,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project = projects.find((p) => p.slug === slug);
   if (!project) return { title: "Project Not Found" };
 
+  const title = `${project.name} | SR Digital Solution`;
+  const path = `/projects/${project.slug}`;
+
   return {
-    title: `${project.name} | SR Digital Solution`,
+    title,
     description: project.description,
+    alternates: { canonical: path },
+    openGraph: {
+      title,
+      description: project.description,
+      url: path,
+      ...(project.image && { images: [{ url: project.image, alt: project.name }] }),
+    },
   };
 }
 
