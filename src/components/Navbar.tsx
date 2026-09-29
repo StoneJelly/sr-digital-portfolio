@@ -4,25 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { navLinks, siteConfig } from "@/data/site";
+import { homeHref, navLinks, siteConfig } from "@/data/site";
 import Button from "./ui/Button";
+import { BrandLogo } from "./ui/BrandMark";
 
 const MENU_ID = "mobile-menu";
-// Tailwind `md` breakpoint (48rem).
-const DESKTOP_QUERY = "(min-width: 48rem)";
-
-function BrandMark() {
-  return (
-    <span
-      aria-hidden="true"
-      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent font-display text-[0.8125rem] font-bold tracking-tight text-white shadow-[var(--shadow-sm)]"
-    >
-      SR
-    </span>
-  );
-}
+// Design breakpoint: mobile nav at <=800px.
+const DESKTOP_QUERY = "(min-width: 801px)";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -32,10 +22,6 @@ export default function Navbar() {
   const [activeId, setActiveId] = useState<string>("home");
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-
-  // On non-home routes, section anchors must point back to the home page.
-  const resolveHref = (href: string) =>
-    isHome || !href.startsWith("#") ? href : `/${href}`;
 
   // Scrolled state (passive listener).
   useEffect(() => {
@@ -66,7 +52,8 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, [isHome]);
 
-  // Body scroll lock, Esc to close, close on resize to desktop.
+  // While open: body scroll lock, Esc to close, close on resize to desktop,
+  // and move focus to the first link.
   useEffect(() => {
     if (!isOpen) return;
     const previousOverflow = document.body.style.overflow;
@@ -82,64 +69,50 @@ export default function Navbar() {
     const handleMediaChange = (event: MediaQueryListEvent) => {
       if (event.matches) setIsOpen(false);
     };
+    const frame = requestAnimationFrame(() => firstLinkRef.current?.focus());
 
     window.addEventListener("keydown", handleKeyDown);
     mediaQuery.addEventListener("change", handleMediaChange);
     return () => {
       document.body.style.overflow = previousOverflow;
+      cancelAnimationFrame(frame);
       window.removeEventListener("keydown", handleKeyDown);
       mediaQuery.removeEventListener("change", handleMediaChange);
     };
   }, [isOpen]);
 
-  // Move focus into the menu when it opens.
-  useEffect(() => {
-    if (!isOpen) return;
-    const frame = requestAnimationFrame(() => firstLinkRef.current?.focus());
-    return () => cancelAnimationFrame(frame);
-  }, [isOpen]);
-
   const closeMenu = () => setIsOpen(false);
-  const showSolid = scrolled || isOpen;
+  const contactHref = homeHref("#contact", pathname);
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-200 ease-out",
-        showSolid
-          ? "border-border bg-background/85 shadow-[var(--shadow-xs)] backdrop-blur-md"
-          : "border-transparent bg-transparent"
+        "fixed inset-x-0 top-0 z-50 border-b bg-background/90 backdrop-blur-[14px] transition-colors duration-200",
+        scrolled || isOpen ? "border-border" : "border-transparent"
       )}
     >
       <nav aria-label="Main" className="container-page">
-        <div className="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
+        <div className="flex h-[76px] items-center gap-10">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2.5 rounded-[var(--radius-control)]"
-            aria-label={`${siteConfig.name} — home`}
+            onClick={closeMenu}
+            aria-label={`${siteConfig.name} home`}
+            className="rounded-[var(--radius-control)]"
           >
-            <BrandMark />
-            <span className="font-display text-[1.0625rem] font-bold tracking-tight text-foreground">
-              SR Digital{" "}
-              <span className="font-semibold text-text-secondary transition-colors group-hover:text-accent">
-                Solution
-              </span>
-            </span>
+            <BrandLogo />
           </Link>
 
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="ml-auto hidden items-center gap-8 min-[801px]:flex">
             {navLinks.map((link) => {
               const isActive = isHome && activeId === link.href.slice(1);
               return (
                 <li key={link.href}>
                   <Link
-                    href={resolveHref(link.href)}
+                    href={homeHref(link.href, pathname)}
                     aria-current={isActive ? "location" : undefined}
                     className={cn(
-                      "inline-flex h-9 items-center rounded-[var(--radius-control)] px-3 text-sm font-medium transition-colors duration-150 lg:px-3.5",
-                      isActive
-                        ? "bg-surface text-foreground shadow-[var(--shadow-xs)]"
-                        : "text-text-secondary hover:bg-surface-muted hover:text-foreground"
+                      "text-[13px] transition-colors duration-150 hover:text-accent",
+                      isActive ? "font-semibold text-accent" : "text-text-secondary"
                     )}
                   >
                     {link.label}
@@ -149,11 +122,13 @@ export default function Navbar() {
             })}
           </ul>
 
-          <div className="hidden md:block">
-            <Button href={resolveHref("#contact")} size="sm">
-              Get a Free Quote
-            </Button>
-          </div>
+          <Link
+            href={contactHref}
+            className="hidden items-center gap-[9px] border-b border-foreground pt-[9px] pb-[7px] pl-[18px] text-[13px] font-semibold text-foreground transition-colors duration-200 hover:border-accent hover:text-accent min-[801px]:inline-flex"
+          >
+            Get a Free Quote
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
 
           <button
             ref={toggleRef}
@@ -162,12 +137,12 @@ export default function Navbar() {
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
             aria-controls={MENU_ID}
-            className="-mr-2 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-[var(--radius-control)] text-foreground transition-colors hover:bg-surface-muted md:hidden"
+            className="-mr-2 ml-auto inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-[var(--radius-control)] text-foreground min-[801px]:hidden"
           >
             {isOpen ? (
-              <X className="h-5 w-5" aria-hidden="true" />
+              <X className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <Menu className="h-5 w-5" aria-hidden="true" />
+              <Menu className="h-6 w-6" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -175,46 +150,45 @@ export default function Navbar() {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            key="mobile-menu"
-            className="fixed inset-x-0 bottom-0 top-16 md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-          >
-            {/* Scrim: tap outside the panel to close */}
-            <button
+          <>
+            {/* Scrim below the panel: tap outside to close. Absolute, not fixed:
+                the header's backdrop-filter is the containing block. */}
+            <motion.button
+              key="mobile-scrim"
               type="button"
               tabIndex={-1}
               aria-hidden="true"
               onClick={closeMenu}
-              className="absolute inset-0 h-full w-full cursor-default bg-foreground/10"
+              className="absolute inset-x-0 top-[76px] -z-10 h-[100dvh] w-full cursor-default bg-foreground/20 min-[801px]:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
             />
-            <motion.div
+            <motion.nav
+              key="mobile-menu"
               id={MENU_ID}
-              className="container-page relative pt-3"
-              initial={{ y: -8 }}
-              animate={{ y: 0 }}
-              exit={{ y: -8 }}
+              aria-label="Mobile"
+              className="max-h-[calc(100dvh-76px)] overflow-y-auto border-t border-border bg-background min-[801px]:hidden"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="rounded-2xl border border-border bg-surface p-3 shadow-[var(--shadow-lg)]">
+              <div className="container-page pt-2.5 pb-[22px]">
                 <ul className="flex flex-col">
                   {navLinks.map((link, index) => {
                     const isActive = isHome && activeId === link.href.slice(1);
                     return (
-                      <li key={link.href}>
+                      <li key={link.href} className="border-b border-border">
                         <Link
                           ref={index === 0 ? firstLinkRef : undefined}
-                          href={resolveHref(link.href)}
+                          href={homeHref(link.href, pathname)}
                           onClick={closeMenu}
                           aria-current={isActive ? "location" : undefined}
                           className={cn(
-                            "flex h-12 items-center rounded-[var(--radius-control)] px-4 text-base font-medium transition-colors",
-                            isActive
-                              ? "bg-accent-soft text-accent"
-                              : "text-foreground hover:bg-surface-muted"
+                            "block py-[15px] text-[15px] transition-colors hover:text-accent",
+                            isActive ? "font-semibold text-accent" : "text-foreground"
                           )}
                         >
                           {link.label}
@@ -223,18 +197,18 @@ export default function Navbar() {
                     );
                   })}
                 </ul>
-                <div className="mt-3 border-t border-border pt-3">
-                  <Button
-                    href={resolveHref("#contact")}
-                    className="w-full"
-                    onClick={closeMenu}
-                  >
-                    Get a Free Quote
-                  </Button>
-                </div>
+                <Button
+                  href={contactHref}
+                  size="lg"
+                  className="mt-[17px] w-full"
+                  onClick={closeMenu}
+                >
+                  Get a Free Quote
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </Button>
               </div>
-            </motion.div>
-          </motion.div>
+            </motion.nav>
+          </>
         )}
       </AnimatePresence>
     </header>
