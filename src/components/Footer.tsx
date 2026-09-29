@@ -1,134 +1,105 @@
+"use client";
+
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
-
-function GithubIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-      <path d="M9 18c-4.51 2-5-2-7-2" />
-    </svg>
-  );
-}
-
-const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
-];
-
-function LinkedinIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect width="4" height="12" x="2" y="9" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-}
+import { usePathname } from "next/navigation";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { homeHref, navLinks, siteConfig } from "@/data/site";
+import { GithubIcon, LinkedinIcon } from "./ui/icons";
+import { BrandLogo } from "./ui/BrandMark";
 
 const socialLinks = [
-  {
-    icon: MessageCircle,
-    href: "https://wa.me/60199403681",
-    label: "WhatsApp",
-  },
-  {
-    icon: GithubIcon,
-    href: "https://github.com/StoneJelly",
-    label: "GitHub",
-  },
-  {
-    icon: LinkedinIcon,
-    href: "https://www.linkedin.com/in/sebastian-raj-a459bb282/",
-    label: "LinkedIn",
-  },
+  { icon: MessageCircle, href: siteConfig.whatsappUrl, label: "WhatsApp" },
+  { icon: GithubIcon, href: siteConfig.githubUrl, label: "GitHub" },
+  { icon: LinkedinIcon, href: siteConfig.linkedinUrl, label: "LinkedIn" },
 ];
 
+const mutedLink = "transition-colors duration-150 hover:text-accent";
+
 export default function Footer() {
+  const pathname = usePathname();
+
   return (
-    <footer className="border-t border-border bg-surface/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link
-              href="/"
-              className="font-bold text-xl tracking-tight inline-block mb-3"
+    <footer className="border-t border-border bg-background">
+      <h2 className="sr-only">Footer</h2>
+
+      {/* Top row: brand / tagline / nav */}
+      <div className="container-page grid grid-cols-1 items-center gap-[22px] py-[42px] min-[801px]:grid-cols-3 min-[801px]:gap-6">
+        <Link
+          href="/"
+          aria-label={`${siteConfig.name} home`}
+          className="justify-self-start rounded-[var(--radius-control)]"
+        >
+          <BrandLogo />
+        </Link>
+        <p className="text-xs text-text-secondary min-[801px]:text-center">
+          {siteConfig.tagline}
+        </p>
+        <nav aria-label="Footer" className="min-[801px]:justify-self-end">
+          <ul className="flex flex-wrap gap-x-[22px] gap-y-2 text-xs text-text-secondary">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={homeHref(link.href, pathname)} className={mutedLink}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      {/* Contact row: email, WhatsApp, quote link, social icons */}
+      <div className="container-page flex flex-col gap-5 border-t border-border py-6 min-[801px]:flex-row min-[801px]:items-center min-[801px]:justify-between">
+        <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-text-secondary">
+          <li>
+            <a href={`mailto:${siteConfig.email}`} className={`${mutedLink} break-all`}>
+              {siteConfig.email}
+            </a>
+          </li>
+          <li>
+            <a
+              href={siteConfig.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={mutedLink}
             >
-              SR Digital <span className="text-accent">Solution</span>
-            </Link>
-            <p className="text-text-secondary text-sm leading-relaxed">
-              Affordable Websites & Web Applications
-            </p>
-          </div>
+              WhatsApp Us
+            </a>
+          </li>
+          <li>
+            <a
+              href={siteConfig.whatsappQuoteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Get a Free Quote on WhatsApp (opens in a new tab)"
+              className="text-link"
+            >
+              Get a Free Quote
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          </li>
+        </ul>
 
-          <div>
-            <h4 className="font-semibold text-sm mb-4">Quick Links</h4>
-            <ul className="space-y-2.5">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-text-secondary text-sm hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <ul className="flex gap-2">
+          {socialLinks.map((social) => (
+            <li key={social.label}>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${social.label} (opens in a new tab)`}
+                className="grid h-9 w-9 place-items-center rounded-full border border-border text-text-secondary transition-colors duration-150 hover:border-accent hover:bg-accent hover:text-white"
+              >
+                <social.icon className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-          <div>
-            <h4 className="font-semibold text-sm mb-4">Contact</h4>
-            <ul className="space-y-2.5 text-text-secondary text-sm">
-              <li>
-                <a
-                  href="mailto:srdigitalsolutions22@gmail.com"
-                  className="hover:text-foreground transition-colors"
-                >
-                  srdigitalsolutions22@gmail.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/60199403681"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
-                >
-                  WhatsApp Us
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-sm mb-4">Follow Us</h4>
-            <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-surface border border-border flex items-center justify-center text-text-secondary hover:text-foreground hover:border-accent/30 transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-text-secondary text-sm">
-            &copy; 2026 SR Digital Solution. All rights reserved.
-          </p>
-          <p className="text-text-secondary text-sm">Malaysia</p>
-        </div>
+      {/* Bottom bar */}
+      <div className="container-page flex flex-col gap-2 border-t border-border pt-[17px] pb-[23px] text-[11px] text-text-tertiary min-[801px]:flex-row min-[801px]:justify-between">
+        <p>&copy; 2026 SR Digital Solution. All rights reserved.</p>
+        <p>{siteConfig.location}</p>
       </div>
     </footer>
   );
