@@ -1,4 +1,10 @@
-import { AppWindow, Check, Globe, LayoutTemplate } from "lucide-react";
+import {
+  AppWindow,
+  ArrowUpRight,
+  Check,
+  Globe,
+  LayoutTemplate,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
 import Button from "./ui/Button";
@@ -22,72 +28,78 @@ export default function Services() {
     <section id="services" className="section bg-background">
       <div className="container-page">
         <SectionHeading
-          eyebrow="Services"
+          eyebrow="02 / What we build"
           title="What We Build"
           subtitle="From simple business websites to custom web applications."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+        {/* Shared hairline grid: container draws top/left, cells draw right/bottom */}
+        <div className="grid grid-cols-1 border-l border-t border-border min-[50rem]:grid-cols-3">
           {services.map((service, index) => {
             const Icon =
               iconByTitle[service.title] ??
               fallbackIcons[index % fallbackIcons.length];
             return (
-              <Reveal
-                key={service.title}
-                delay={index * 0.06}
-                className="h-full"
-              >
-                <article className="group flex h-full flex-col rounded-2xl border border-border bg-surface p-6 sm:p-7 shadow-[var(--shadow-xs)] transition-[box-shadow,transform,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-border-strong hover:shadow-[var(--shadow-md)]">
-                  <div
-                    className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-control)] bg-accent-soft text-accent"
-                    aria-hidden="true"
-                  >
-                    <Icon className="h-5 w-5" strokeWidth={1.75} />
+              <Reveal key={service.title} delay={index * 0.06} className="h-full">
+                <article className="flex h-full flex-col border-b border-r border-border bg-surface/45 p-6 transition-[background-color,transform] duration-200 ease-out hover:-translate-y-[3px] hover:bg-surface min-[50rem]:px-[27px] min-[50rem]:py-[26px]">
+                  <div className="flex items-start justify-between">
+                    <span
+                      className="grid h-[41px] w-[41px] place-items-center rounded-full bg-accent-soft text-accent"
+                      aria-hidden="true"
+                    >
+                      <Icon size={20} strokeWidth={1.75} />
+                    </span>
+                    <span
+                      className="text-[10px] tracking-[0.1em] text-text-tertiary"
+                      aria-hidden="true"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-foreground">
+                  <h3 className="mt-7 text-[17px] font-bold tracking-[-0.03em] text-foreground min-[50rem]:mt-[38px]">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                  <p className="mt-3 max-w-[275px] text-[13px] leading-[1.6] text-text-secondary">
                     {service.description}
                   </p>
 
-                  <hr className="my-6 border-border" />
-
-                  <ul className="flex-1 space-y-2.5">
+                  <ul className="mt-5 flex-1 space-y-1.5">
                     {service.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
+                      <li
+                        key={feature}
+                        className="flex items-start gap-2 text-[12.5px] leading-5 text-text-secondary"
+                      >
                         <Check
-                          className="mt-1 h-4 w-4 shrink-0 text-accent"
-                          strokeWidth={2.25}
+                          className="mt-[3px] h-3.5 w-3.5 shrink-0 text-accent"
+                          strokeWidth={2.5}
                           aria-hidden="true"
                         />
-                        <span className="text-sm leading-6 text-text-secondary">
-                          {feature}
-                        </span>
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="mt-7 flex flex-wrap items-end justify-between gap-4 border-t border-border pt-5">
+                  <div className="mt-6 flex flex-wrap items-end justify-between gap-x-4 gap-y-3 border-t border-border pt-5">
                     <div>
                       {!hasPriceQualifier(service.price) && (
-                        <p className="text-xs font-medium text-text-tertiary">
+                        <p className="text-[10px] uppercase tracking-[0.1em] text-text-tertiary">
                           Starting from
                         </p>
                       )}
-                      <p className="font-display text-2xl font-bold tracking-tight text-foreground">
+                      <p className="text-2xl font-bold tracking-[-0.05em] text-foreground">
                         {service.price}
                       </p>
                     </div>
                     <Button
                       href={service.href}
-                      variant="secondary"
+                      variant="link"
                       size="sm"
+                      className="gap-1.5 border-b-0 pb-0 text-xs text-accent hover:text-accent-hover"
                       ariaLabel={`${service.cta}: ${service.title}`}
                     >
                       {service.cta}
+                      <ArrowUpRight size={15} aria-hidden="true" />
                     </Button>
                   </div>
                 </article>
@@ -96,7 +108,7 @@ export default function Services() {
           })}
         </div>
 
-        <p className="mt-10 text-center text-sm text-text-tertiary">
+        <p className="mt-8 text-center text-xs text-text-tertiary">
           Final pricing depends on project requirements and complexity.
         </p>
       </div>
