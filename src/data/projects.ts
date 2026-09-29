@@ -83,6 +83,29 @@ export const projects: Project[] = [
     image: "/demos/elite-autocare/image2.jpg",
   },
   {
+    slug: "serai-and-silk",
+    name: "Serai & Silk",
+    category: "Beauty Salon Website",
+    description:
+      "An elegant website concept for a boutique beauty salon to present its service menu, show before-and-after looks and take appointment requests on WhatsApp.",
+    objective:
+      "Serai & Silk needed a polished online presence that reflects the calm, premium feel of the studio, lists hair, nail and facial prices clearly, and turns visitors into booked appointments without a complicated booking system.",
+    solution:
+      "We designed a refined single-page website with a priced service menu, interactive before/after comparison sliders, stylist profiles and a simple booking helper that sends the chosen service, date and time straight to the salon's WhatsApp.",
+    features: [
+      "Service menu with prices",
+      "Before/after gallery",
+      "WhatsApp appointment booking",
+      "Stylist profiles",
+      "Client reviews",
+      "Opening hours & Google Maps",
+      "Responsive design",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Google Maps API"],
+    image: "/demos/serai-and-silk/hero.jpg",
+    demo: "/demos/serai-and-silk/index.html",
+  },
+  {
     slug: "novatech-solutions",
     name: "NovaTech Solutions",
     category: "Corporate Website",
