@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { DollarSign, Zap, Smartphone, MessageSquare } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
+import Reveal from "./ui/Reveal";
 
 const features = [
   {
@@ -33,33 +33,34 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section border-y border-border bg-surface">
+      <div className="container-page">
         <SectionHeading
+          eyebrow="Why us"
           title="Why Choose SR Digital Solution?"
           subtitle="Professional digital solutions without the complicated agency process."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <ul className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4 lg:gap-x-0">
           {features.map((feature, index) => (
-            <motion.div
+            <Reveal
+              as="li"
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-surface border border-border rounded-2xl p-6 sm:p-8 hover:border-accent/20 transition-colors"
+              delay={index * 0.06}
+              className="lg:border-l lg:border-border lg:px-8 lg:first:border-l-0 lg:first:pl-0 lg:last:pr-0"
             >
-              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
-                <feature.icon className="w-6 h-6 text-accent" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)] bg-accent-soft text-accent">
+                <feature.icon aria-hidden="true" className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-text-secondary leading-relaxed">
+              <h3 className="mt-5 text-lg font-semibold text-foreground">
+                {feature.title}
+              </h3>
+              <p className="mt-2 leading-relaxed text-text-secondary">
                 {feature.description}
               </p>
-            </motion.div>
+            </Reveal>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
