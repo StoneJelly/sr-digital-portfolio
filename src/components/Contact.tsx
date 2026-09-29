@@ -1,29 +1,23 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useId, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Mail, Send, CheckCircle, X } from "lucide-react";
+import {
+  MessageCircle,
+  Send,
+  CheckCircle,
+  X,
+  ArrowUpRight,
+  ChevronDown,
+  AlertCircle,
+} from "lucide-react";
 import emailjs from "@emailjs/browser";
 import SectionHeading from "./ui/SectionHeading";
 import Button from "./ui/Button";
+import Reveal from "./ui/Reveal";
 import { emailjsConfig } from "@/lib/emailjs";
-
-const contactOptions = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    detail: "Chat with Us",
-    href: "https://wa.me/60199403681?text=Hi%20SR%20Digital%20Solution%2C%20I%27m%20interested%20in%20your%20web%20development%20services.",
-    color: "text-green-400",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    detail: "srdigitalsolutions22@gmail.com",
-    href: "mailto:srdigitalsolutions22@gmail.com",
-    color: "text-accent",
-  },
-];
+import { siteConfig } from "@/data/site";
+import { cn } from "@/lib/utils";
 
 const projectTypes = [
   "Business Website",
@@ -32,6 +26,52 @@ const projectTypes = [
   "Website Redesign",
   "Other",
 ];
+
+const labelClass =
+  "block text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-text-tertiary";
+
+function fieldClass(hasError: boolean) {
+  return cn(
+    "block w-full rounded-none border-0 border-b bg-transparent py-[13px] text-sm text-foreground placeholder:text-text-tertiary outline-none transition-[border-color,box-shadow] duration-150 focus:border-accent focus:shadow-[0_1px_0_0_var(--color-accent)]",
+    hasError
+      ? "border-danger focus:border-danger focus:shadow-[0_1px_0_0_var(--color-danger)]"
+      : "border-border hover:border-border-strong"
+  );
+}
+
+function FieldLabel({
+  htmlFor,
+  children,
+  required,
+}: {
+  htmlFor: string;
+  children: React.ReactNode;
+  required?: boolean;
+}) {
+  return (
+    <label htmlFor={htmlFor} className={labelClass}>
+      {children}
+      {required && (
+        <>
+          <span aria-hidden="true" className="ml-0.5 text-accent">
+            *
+          </span>
+          <span className="sr-only"> (required)</span>
+        </>
+      )}
+    </label>
+  );
+}
+
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p id={id} className="mt-2 flex items-center gap-1.5 text-xs text-danger">
+      <AlertCircle aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+      {message}
+    </p>
+  );
+}
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -45,6 +85,26 @@ export default function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const uid = useId();
+  const fid = (name: string) => `${uid}-${name}`;
+  const eid = (name: string) => `${uid}-${name}-error`;
+  const modalTitleId = `${uid}-success-title`;
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!showSuccess) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowSuccess(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [showSuccess]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -92,149 +152,185 @@ export default function Contact() {
     }
   };
 
+  const a11y = (name: string) => ({
+    id: fid(name),
+    "aria-invalid": errors[name] ? true : undefined,
+    "aria-describedby": errors[name] ? eid(name) : undefined,
+  });
+
+  const detailLink =
+    "group inline-flex items-center gap-1.5 text-[0.8125rem] font-bold text-foreground transition-colors hover:text-accent";
+
   return (
-    <section id="contact" className="py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          title="Let's Talk About Your Project"
-          subtitle="Have a website or web application idea? Send us a message and we'll get back to you with a quotation."
-        />
+    <section id="contact" className="section bg-surface">
+      <div className="container-page grid grid-cols-1 gap-[55px] md:grid-cols-[0.85fr_1.15fr] md:gap-[60px] lg:gap-[120px]">
+        <Reveal>
+          <SectionHeading
+            eyebrow="08 / Get in touch"
+            align="left"
+            title="Let's Talk About"
+            highlight="Your Project"
+            className="mb-0 md:mb-0"
+          />
+          <p className="mt-7 mb-[42px] max-w-[350px] text-[0.9375rem] leading-relaxed text-text-secondary">
+            Have a website or web application idea? Send us a message and
+            we&apos;ll get back to you with a quotation.
+          </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 max-w-6xl mx-auto">
-          <div className="lg:col-span-2 space-y-4">
-            {contactOptions.map((option) => (
-              <motion.a
-                key={option.title}
-                href={option.href}
-                target={option.href.startsWith("http") ? "_blank" : undefined}
-                rel={
-                  option.href.startsWith("http")
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="flex items-center gap-4 bg-surface border border-border rounded-xl p-5 hover:border-accent/20 transition-colors group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-surface-hover flex items-center justify-center shrink-0">
-                  <option.icon
-                    className={`w-5 h-5 ${option.color}`}
+          <dl>
+            <div className="border-t border-border py-[15px]">
+              <dt className={cn(labelClass, "mb-[7px]")}>WhatsApp</dt>
+              <dd>
+                <a
+                  href={siteConfig.whatsappQuoteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={detailLink}
+                >
+                  Chat with Us
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 text-text-tertiary transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
                   />
-                </div>
-                <div>
-                  <p className="font-medium text-sm">{option.title}</p>
-                  <p className="text-text-secondary text-sm">{option.detail}</p>
-                </div>
-              </motion.a>
-            ))}
-          </div>
+                </a>
+              </dd>
+            </div>
+            <div className="border-t border-border py-[15px]">
+              <dt className={cn(labelClass, "mb-[7px]")}>Email</dt>
+              <dd>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className={cn(detailLink, "break-all")}
+                >
+                  {siteConfig.email}
+                </a>
+              </dd>
+            </div>
+            <div className="border-y border-border py-[15px]">
+              <dt className={cn(labelClass, "mb-[7px]")}>Location</dt>
+              <dd className="text-[0.8125rem] font-bold text-foreground">
+                {siteConfig.location}
+              </dd>
+            </div>
+          </dl>
+        </Reveal>
 
-          <motion.form
+        <Reveal delay={0.08}>
+          <form
             ref={formRef}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
             onSubmit={handleSubmit}
-            className="lg:col-span-3 bg-surface border border-border rounded-2xl p-6 sm:p-8 space-y-5"
+            noValidate
+            className="flex flex-col gap-[22px]"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 sm:gap-5">
               <div>
-                <label className="block text-sm font-medium mb-1.5">
-                  Name *
-                </label>
+                <FieldLabel htmlFor={fid("from_name")} required>
+                  Name
+                </FieldLabel>
                 <input
                   type="text"
                   name="from_name"
+                  autoComplete="name"
                   value={formData.from_name}
                   onChange={handleChange}
-                  className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors"
+                  className={fieldClass(!!errors.from_name)}
                   placeholder="Your name"
+                  {...a11y("from_name")}
                 />
-                {errors.from_name && (
-                  <p className="text-red-400 text-xs mt-1">{errors.from_name}</p>
-                )}
+                <FieldError id={eid("from_name")} message={errors.from_name} />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1.5">
-                  Email *
-                </label>
+                <FieldLabel htmlFor={fid("from_email")} required>
+                  Email
+                </FieldLabel>
                 <input
                   type="email"
                   name="from_email"
+                  autoComplete="email"
                   value={formData.from_email}
                   onChange={handleChange}
-                  className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors"
+                  className={fieldClass(!!errors.from_email)}
                   placeholder="your@email.com"
+                  {...a11y("from_email")}
                 />
-                {errors.from_email && (
-                  <p className="text-red-400 text-xs mt-1">{errors.from_email}</p>
-                )}
+                <FieldError id={eid("from_email")} message={errors.from_email} />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1.5">
-                Business Name
-              </label>
+              <FieldLabel htmlFor={fid("business")}>Business Name</FieldLabel>
               <input
                 type="text"
                 name="business"
+                autoComplete="organization"
                 value={formData.business}
                 onChange={handleChange}
-                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors"
+                className={fieldClass(false)}
                 placeholder="Your business name (optional)"
+                id={fid("business")}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1.5">
-                Project Type *
-              </label>
-              <select
-                name="project_type"
-                value={formData.project_type}
-                onChange={handleChange}
-                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer"
-              >
-                <option value="">Select project type</option>
-                {projectTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-              {errors.project_type && (
-                <p className="text-red-400 text-xs mt-1">
-                  {errors.project_type}
-                </p>
-              )}
+              <FieldLabel htmlFor={fid("project_type")} required>
+                Project Type
+              </FieldLabel>
+              <div className="relative">
+                <select
+                  name="project_type"
+                  value={formData.project_type}
+                  onChange={handleChange}
+                  className={cn(
+                    fieldClass(!!errors.project_type),
+                    "cursor-pointer appearance-none pr-8",
+                    !formData.project_type && "text-text-tertiary"
+                  )}
+                  {...a11y("project_type")}
+                >
+                  <option value="">Select project type</option>
+                  {projectTypes.map((type) => (
+                    <option key={type} value={type} className="text-foreground">
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary"
+                />
+              </div>
+              <FieldError id={eid("project_type")} message={errors.project_type} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1.5">
-                Message *
-              </label>
+              <FieldLabel htmlFor={fid("message")} required>
+                Message
+              </FieldLabel>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                rows={4}
-                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent transition-colors resize-none"
+                rows={5}
+                className={cn(fieldClass(!!errors.message), "resize-y")}
                 placeholder="Tell us about your project..."
+                {...a11y("message")}
               />
-              {errors.message && (
-                <p className="text-red-400 text-xs mt-1">{errors.message}</p>
-              )}
+              <FieldError id={eid("message")} message={errors.message} />
             </div>
 
-            <Button type="submit" className="w-full" disabled={sending}>
-              <Send className="w-4 h-4" />
-              {sending ? "Sending..." : "Request a Free Quote"}
+            <Button
+              type="submit"
+              size="lg"
+              className="mt-[3px] w-full sm:w-auto sm:self-start"
+              disabled={sending}
+            >
+              <Send aria-hidden="true" className="h-4 w-4" />
+              <span aria-live="polite">
+                {sending ? "Sending..." : "Request a Free Quote"}
+              </span>
             </Button>
-          </motion.form>
-        </div>
+          </form>
+        </Reveal>
       </div>
 
       <AnimatePresence>
@@ -243,47 +339,55 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 px-5 backdrop-blur-[2px]"
             onClick={() => setShowSuccess(false)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="bg-surface border border-border rounded-2xl p-8 sm:p-10 max-w-md w-full text-center relative"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={modalTitleId}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative w-full max-w-md rounded-[var(--radius-card)] border border-border bg-surface p-8 text-left shadow-[var(--shadow-lg)] sm:p-10"
               onClick={(e) => e.stopPropagation()}
             >
               <button
+                type="button"
                 onClick={() => setShowSuccess(false)}
-                className="absolute top-4 right-4 text-text-secondary hover:text-foreground transition-colors cursor-pointer"
+                aria-label="Close"
+                className="absolute right-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--radius-control)] text-text-secondary transition-colors hover:bg-surface-hover hover:text-foreground"
               >
-                <X className="w-5 h-5" />
+                <X aria-hidden="true" className="h-5 w-5" />
               </button>
 
-              <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-success/10 flex items-center justify-center">
-                <CheckCircle className="w-8 h-8 text-success" />
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-[var(--radius-card)] bg-success-soft text-success">
+                <CheckCircle aria-hidden="true" className="h-6 w-6" />
               </div>
 
-              <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
-              <p className="text-text-secondary mb-6">
+              <h3
+                id={modalTitleId}
+                className="mb-2 text-2xl font-bold tracking-[-0.04em] text-foreground"
+              >
+                Message Sent!
+              </h3>
+              <p className="mb-8 text-sm leading-relaxed text-text-secondary">
                 Thank you for your enquiry. We&apos;ll get back to you with a
                 quotation shortly.
               </p>
 
-              <div className="flex flex-col gap-3">
-                <a
-                  href="https://wa.me/60199403681?text=Hi%20SR%20Digital%20Solution%2C%20I%27ve%20just%20submitted%20a%20form%20enquiry."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-green-500/10 text-green-400 border border-green-500/20 px-6 py-3 rounded-lg font-medium text-sm hover:bg-green-500/20 transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4" />
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <Button href={siteConfig.whatsappFollowUpUrl} variant="whatsapp">
+                  <MessageCircle aria-hidden="true" className="h-4 w-4" />
                   Also Chat on WhatsApp
-                </a>
+                </Button>
                 <button
+                  ref={closeButtonRef}
+                  type="button"
                   onClick={() => setShowSuccess(false)}
-                  className="text-text-secondary text-sm hover:text-foreground transition-colors cursor-pointer"
+                  className="inline-flex h-11 cursor-pointer items-center justify-center rounded-[var(--radius-control)] px-5 text-[0.8125rem] font-bold text-text-secondary transition-colors hover:bg-surface-hover hover:text-foreground"
                 >
                   Close
                 </button>

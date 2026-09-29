@@ -37,6 +37,30 @@ export const projects: Project[] = [
     demo: "/demos/spice-and-co/index.html",
   },
   {
+    slug: "ironbloom",
+    name: "Ironbloom Fitness Studio",
+    category: "Fitness Studio Website",
+    description:
+      "A bold fitness studio website concept with a weekly class timetable, membership plans and instant WhatsApp booking for free trial classes.",
+    objective:
+      "Ironbloom Fitness Studio needed a website that shows the weekly class schedule at a glance, presents membership pricing clearly, and turns visitors into trial-class bookings without back-and-forth phone calls.",
+    solution:
+      "We designed an energetic single-page website with a filterable weekly timetable that switches to day tabs on mobile, programme and coach profiles, transparent RM pricing, and WhatsApp CTAs set up for auto-replies to enquiries and trial bookings.",
+    features: [
+      "Class timetable",
+      "Programmes",
+      "Trainer profiles",
+      "Membership plans",
+      "WhatsApp trial booking",
+      "Gallery",
+      "Google Maps",
+      "Responsive design",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Google Maps API"],
+    image: "/demos/ironbloom/hero.jpg",
+    demo: "/demos/ironbloom/index.html",
+  },
+  {
     slug: "elite-autocare",
     name: "Elite AutoCare",
     category: "Automotive Business Website",
@@ -59,6 +83,29 @@ export const projects: Project[] = [
     image: "/demos/elite-autocare/image2.jpg",
   },
   {
+    slug: "serai-and-silk",
+    name: "Serai & Silk",
+    category: "Beauty Salon Website",
+    description:
+      "An elegant website concept for a boutique beauty salon to present its service menu, show before-and-after looks and take appointment requests on WhatsApp.",
+    objective:
+      "Serai & Silk needed a polished online presence that reflects the calm, premium feel of the studio, lists hair, nail and facial prices clearly, and turns visitors into booked appointments without a complicated booking system.",
+    solution:
+      "We designed a refined single-page website with a priced service menu, interactive before/after comparison sliders, stylist profiles and a simple booking helper that sends the chosen service, date and time straight to the salon's WhatsApp.",
+    features: [
+      "Service menu with prices",
+      "Before/after gallery",
+      "WhatsApp appointment booking",
+      "Stylist profiles",
+      "Client reviews",
+      "Opening hours & Google Maps",
+      "Responsive design",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Google Maps API"],
+    image: "/demos/serai-and-silk/hero.jpg",
+    demo: "/demos/serai-and-silk/index.html",
+  },
+  {
     slug: "novatech-solutions",
     name: "NovaTech Solutions",
     category: "Corporate Website",
@@ -79,6 +126,30 @@ export const projects: Project[] = [
     technologies: ["Angular", "TypeScript", "HTML", "CSS", "Node.js"],
     demo: "/demos/novatech-solutions/index.html",
     image: "/demos/novatech-solutions/image1.jpg",
+  },
+  {
+    slug: "tunas-minda",
+    name: "Tunas Minda Learning Centre",
+    category: "Tuition Centre Website",
+    description:
+      "A friendly tuition centre website concept that helps parents compare classes, check the weekly schedule and send enquiries straight to WhatsApp.",
+    objective:
+      "Tunas Minda Learning Centre wanted to look trustworthy to parents, answer common questions about subjects, timetables and fees upfront, and turn more website visitors into trial-class bookings.",
+    solution:
+      "We designed a bright, welcoming website with subjects by level, a filterable weekly class schedule, teacher profiles, clear monthly fees and a parent enquiry form that opens WhatsApp with the child's details prefilled, ready for an instant auto-reply.",
+    features: [
+      "Subjects & levels",
+      "Filterable class schedule",
+      "Teacher profiles",
+      "Monthly fees",
+      "Parent enquiry form",
+      "WhatsApp auto-reply ready",
+      "Google Maps",
+      "Responsive design",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Google Maps API"],
+    image: "/demos/tunas-minda/hero.jpg",
+    demo: "/demos/tunas-minda/index.html",
   },
   {
     slug: "business-management-system",

@@ -1,0 +1,44 @@
+Ironbloom Fitness Studio — concept demo by SR Digital Solution
+Ironbloom is a fictional business. All photos are from Unsplash and used under the
+Unsplash License (https://unsplash.com/license). Images were resized, cropped and
+re-compressed for the web.
+
+hero.jpg
+  Photographer: Victor Freitas
+  Source: https://unsplash.com/photos/WvDYdXDzkhs
+  File:   https://images.unsplash.com/photo-1517836357463-d25dfeac3438
+
+image1.jpg
+  Photographer: bruce mars
+  Source: https://unsplash.com/photos/gJtDg6WfMlQ
+  File:   https://images.unsplash.com/photo-1518611012118-696072aa579a
+
+image2.jpg
+  Photographer: Danielle Cerullo
+  Source: https://unsplash.com/photos/CQfNt66ttZM
+  File:   https://images.unsplash.com/photo-1534438327276-14e5300c3a48
+
+image3.jpg
+  Photographer: Karsten Winegeart
+  Source: https://unsplash.com/photos/0Wra5YYVQJE
+  File:   https://images.unsplash.com/photo-1599058917212-d750089bc07e
+
+image4.jpg
+  Photographer: Jonathan Borba
+  Source: https://unsplash.com/photos/R0y_bEUjiOM
+  File:   https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b
+
+trainer1.jpg (cropped)
+  Photographer: Anastase Maragos
+  Source: https://unsplash.com/photos/7kEpUPB8vNk
+  File:   https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e
+
+trainer2.jpg (cropped)
+  Photographer: Hayley Kim Studios
+  Source: https://unsplash.com/photos/eot-ka5dM7Q
+  File:   https://images.unsplash.com/photo-1594381898411-846e7d193883
+
+trainer3.jpg (cropped)
+  Photographer: Jonathan Borba
+  Source: https://unsplash.com/photos/lrQPTQs7nQQ
+  File:   https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b

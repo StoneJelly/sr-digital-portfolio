@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ironbloom Fitness Studio | Small-Group Training in Petaling Jaya</title>
+  <meta name="description" content="Ironbloom Fitness Studio — small-group strength, HIIT, boxing and mobility classes in SS2, Petaling Jaya. Book a free trial class on WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" aria-label="Ironbloom Fitness Studio, back to top">
+        <span class="logo-mark" aria-hidden="true"></span><span class="logo-word">IRON<span>BLOOM</span></span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#timetable">Timetable</a></li>
+          <li><a href="#programmes">Programmes</a></li>
+          <li><a href="#trainers">Trainers</a></li>
+          <li><a href="#membership">Membership</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class%20at%20Ironbloom%20Fitness%20Studio." class="nav-cta" target="_blank" rel="noopener">Free Trial</a>
+      <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <nav aria-label="Mobile">
+      <ul>
+        <li><a href="#timetable">Timetable</a></li>
+        <li><a href="#programmes">Programmes</a></li>
+        <li><a href="#trainers">Trainers</a></li>
+        <li><a href="#membership">Membership</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-primary btn-block" target="_blank" rel="noopener">Book a Free Trial</a>
+  </div>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-bg">
+        <img src="hero.jpg" alt="Athlete gripping a loaded barbell on the gym floor, ready to lift" class="hero-img" fetchpriority="high">
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="container hero-content">
+        <p class="eyebrow">Small-group training &middot; SS2, Petaling Jaya</p>
+        <h1 class="hero-title">Get strong.<br><span>Stay consistent.</span></h1>
+        <p class="hero-subtitle">Coached strength, HIIT, boxing and mobility classes capped at 12 people &mdash; so every rep gets checked and nobody gets lost at the back.</p>
+        <div class="hero-buttons">
+          <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-primary" target="_blank" rel="noopener">Book a Free Trial Class</a>
+          <a href="#timetable" class="btn btn-outline">View Timetable</a>
+        </div>
+        <ul class="hero-stats" aria-label="Studio highlights">
+          <li><strong>12</strong><span>Max per class</span></li>
+          <li><strong>24</strong><span>Classes a week</span></li>
+          <li><strong>4.9&#9733;</strong><span>Google rating</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Strength Lab</span><span>HIIT Burn</span><span>Box Fit</span><span>Flow &amp; Mobility</span><span>Personal Training</span>
+        <span>Strength Lab</span><span>HIIT Burn</span><span>Box Fit</span><span>Flow &amp; Mobility</span><span>Personal Training</span>
+      </div>
+    </div>
+
+    <!-- TIMETABLE -->
+    <section class="timetable" id="timetable" aria-labelledby="timetable-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Weekly timetable</p>
+            <h2 class="section-title" id="timetable-title">Find your class</h2>
+          </div>
+          <p class="section-intro">Every class is 45&ndash;60 minutes and fully coached. Spots are limited &mdash; reserve yours on WhatsApp and get an instant reply with availability.</p>
+        </div>
+
+        <div class="tt-filters" role="group" aria-label="Filter classes by type">
+          <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">All classes</button>
+          <button type="button" class="chip" data-filter="strength" aria-pressed="false"><i class="dot dot-strength" aria-hidden="true"></i>Strength</button>
+          <button type="button" class="chip" data-filter="hiit" aria-pressed="false"><i class="dot dot-hiit" aria-hidden="true"></i>HIIT</button>
+          <button type="button" class="chip" data-filter="boxing" aria-pressed="false"><i class="dot dot-boxing" aria-hidden="true"></i>Boxing</button>
+          <button type="button" class="chip" data-filter="mobility" aria-pressed="false"><i class="dot dot-mobility" aria-hidden="true"></i>Mobility</button>
+        </div>
+
+        <div class="tt-tabs" aria-label="Day of the week">
+          <button type="button" class="tt-tab" id="tab-mon" aria-controls="day-mon">Mon</button>
+          <button type="button" class="tt-tab" id="tab-tue" aria-controls="day-tue">Tue</button>
+          <button type="button" class="tt-tab" id="tab-wed" aria-controls="day-wed">Wed</button>
+          <button type="button" class="tt-tab" id="tab-thu" aria-controls="day-thu">Thu</button>
+          <button type="button" class="tt-tab" id="tab-fri" aria-controls="day-fri">Fri</button>
+          <button type="button" class="tt-tab" id="tab-sat" aria-controls="day-sat">Sat</button>
+          <button type="button" class="tt-tab" id="tab-sun" aria-controls="day-sun">Sun</button>
+        </div>
+
+        <div class="tt-grid">
+          <div class="tt-day" id="day-mon" data-tab="tab-mon">
+            <h3 class="tt-day-name">Monday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="hiit"><time>6:30 AM</time><span class="tt-name">HIIT Burn</span><span class="tt-meta">45 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="strength"><time>12:30 PM</time><span class="tt-name">Strength Lab Express</span><span class="tt-meta">45 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="strength"><time>6:30 PM</time><span class="tt-name">Strength Lab</span><span class="tt-meta">60 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="mobility"><time>8:00 PM</time><span class="tt-name">Flow &amp; Mobility</span><span class="tt-meta">50 min &middot; Coach Aisyah</span></li>
+            </ul>
+          </div>
+          <div class="tt-day" id="day-tue" data-tab="tab-tue">
+            <h3 class="tt-day-name">Tuesday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="strength"><time>6:30 AM</time><span class="tt-name">Strength Lab</span><span class="tt-meta">60 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="hiit"><time>12:30 PM</time><span class="tt-name">HIIT Express</span><span class="tt-meta">30 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="boxing"><time>7:00 PM</time><span class="tt-name">Box Fit</span><span class="tt-meta">50 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="mobility"><time>8:15 PM</time><span class="tt-name">Flow &amp; Mobility</span><span class="tt-meta">50 min &middot; Coach Aisyah</span></li>
+            </ul>
+          </div>
+          <div class="tt-day" id="day-wed" data-tab="tab-wed">
+            <h3 class="tt-day-name">Wednesday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="hiit"><time>6:30 AM</time><span class="tt-name">HIIT Burn</span><span class="tt-meta">45 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="mobility"><time>12:30 PM</time><span class="tt-name">Flow &amp; Mobility</span><span class="tt-meta">45 min &middot; Coach Aisyah</span></li>
+              <li class="tt-class" data-type="strength"><time>6:30 PM</time><span class="tt-name">Strength Lab</span><span class="tt-meta">60 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="boxing"><time>8:00 PM</time><span class="tt-name">Box Fit</span><span class="tt-meta">50 min &middot; Coach Sara</span></li>
+            </ul>
+          </div>
+          <div class="tt-day" id="day-thu" data-tab="tab-thu">
+            <h3 class="tt-day-name">Thursday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="strength"><time>6:30 AM</time><span class="tt-name">Strength Lab</span><span class="tt-meta">60 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="hiit"><time>12:30 PM</time><span class="tt-name">HIIT Express</span><span class="tt-meta">30 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="hiit"><time>7:00 PM</time><span class="tt-name">HIIT Burn</span><span class="tt-meta">45 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="mobility"><time>8:15 PM</time><span class="tt-name">Flow &amp; Mobility</span><span class="tt-meta">50 min &middot; Coach Aisyah</span></li>
+            </ul>
+          </div>
+          <div class="tt-day" id="day-fri" data-tab="tab-fri">
+            <h3 class="tt-day-name">Friday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="boxing"><time>6:30 AM</time><span class="tt-name">Box Fit</span><span class="tt-meta">50 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="strength"><time>12:30 PM</time><span class="tt-name">Strength Lab Express</span><span class="tt-meta">45 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="hiit"><time>6:30 PM</time><span class="tt-name">HIIT Burn</span><span class="tt-meta">45 min &middot; Coach Sara</span></li>
+            </ul>
+          </div>
+          <div class="tt-day" id="day-sat" data-tab="tab-sat">
+            <h3 class="tt-day-name">Saturday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="strength"><time>8:00 AM</time><span class="tt-name">Strength Lab</span><span class="tt-meta">60 min &middot; Coach Ryan</span></li>
+              <li class="tt-class" data-type="hiit"><time>9:30 AM</time><span class="tt-name">HIIT Burn</span><span class="tt-meta">45 min &middot; Coach Sara</span></li>
+              <li class="tt-class" data-type="mobility"><time>11:00 AM</time><span class="tt-name">Flow &amp; Mobility</span><span class="tt-meta">60 min &middot; Coach Aisyah</span></li>
+            </ul>
+          </div>
+          <div class="tt-day" id="day-sun" data-tab="tab-sun">
+            <h3 class="tt-day-name">Sunday</h3>
+            <ul class="tt-list">
+              <li class="tt-class" data-type="mobility"><time>9:00 AM</time><span class="tt-name">Flow &amp; Mobility</span><span class="tt-meta">60 min &middot; Coach Aisyah</span></li>
+              <li class="tt-class" data-type="boxing"><time>10:30 AM</time><span class="tt-name">Box Fit</span><span class="tt-meta">50 min &middot; Coach Sara</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tt-footer">
+          <p>New here? Your first class is on us.</p>
+          <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-primary" target="_blank" rel="noopener">Reserve a Trial Spot</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMMES -->
+    <section class="programmes" id="programmes" aria-labelledby="programmes-title">
+      <div class="container">
+        <p class="section-label">Programmes</p>
+        <h2 class="section-title" id="programmes-title">Train with a plan, not a guess</h2>
+        <div class="prog-grid">
+          <article class="prog-card reveal" data-accent="strength">
+            <span class="prog-num" aria-hidden="true">01</span>
+            <h3>Strength Lab</h3>
+            <p>Barbell and dumbbell training on a progressive 6-week block. Squat, hinge, push and pull &mdash; coached for form first, then load.</p>
+            <ul class="prog-tags"><li>All levels</li><li>60 min</li></ul>
+          </article>
+          <article class="prog-card reveal" data-accent="hiit">
+            <span class="prog-num" aria-hidden="true">02</span>
+            <h3>HIIT Burn</h3>
+            <p>Interval circuits with rowers, bikes, kettlebells and battle ropes. High effort, scalable moves, and a heart-rate screen to keep you honest.</p>
+            <ul class="prog-tags"><li>Fat loss</li><li>30&ndash;45 min</li></ul>
+          </article>
+          <article class="prog-card reveal" data-accent="boxing">
+            <span class="prog-num" aria-hidden="true">03</span>
+            <h3>Box Fit</h3>
+            <p>Pad work, bag rounds and footwork drills. No sparring, no experience needed &mdash; just a serious sweat and a lot of stress relief.</p>
+            <ul class="prog-tags"><li>Beginner friendly</li><li>50 min</li></ul>
+          </article>
+          <article class="prog-card reveal" data-accent="mobility">
+            <span class="prog-num" aria-hidden="true">04</span>
+            <h3>Flow &amp; Mobility</h3>
+            <p>Joint prep, active stretching and core control to undo desk posture, recover from heavy days and move without stiffness.</p>
+            <ul class="prog-tags"><li>Recovery</li><li>45&ndash;60 min</li></ul>
+          </article>
+        </div>
+
+        <div class="pt-banner reveal">
+          <img src="image4.jpg" alt="Coach correcting a member's push-up form during a one-to-one session" loading="lazy">
+          <div class="pt-copy">
+            <p class="section-label">1-to-1 coaching</p>
+            <h3>Personal Training</h3>
+            <p>A programme built around your goal &mdash; first pull-up, post-natal return, marathon prep or simply feeling stronger. Includes a movement assessment and progress check-ins every 4 weeks.</p>
+            <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20personal%20training%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-outline" target="_blank" rel="noopener">Ask about PT</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAINERS -->
+    <section class="trainers" id="trainers" aria-labelledby="trainers-title">
+      <div class="container">
+        <p class="section-label">Coaches</p>
+        <h2 class="section-title" id="trainers-title">Meet the team</h2>
+        <div class="trainer-grid">
+          <article class="trainer-card reveal">
+            <div class="trainer-img"><img src="trainer1.jpg" alt="Coach Ryan performing barbell curls in the studio" loading="lazy"></div>
+            <div class="trainer-info">
+              <h3>Coach Ryan</h3>
+              <p class="trainer-role">Head of Strength</p>
+              <p>Certified strength &amp; conditioning coach with 8 years of experience. Loves getting first-timers to their first bodyweight deadlift.</p>
+            </div>
+          </article>
+          <article class="trainer-card reveal">
+            <div class="trainer-img"><img src="trainer2.jpg" alt="Coach Sara doing a core exercise on the studio floor" loading="lazy"></div>
+            <div class="trainer-info">
+              <h3>Coach Sara</h3>
+              <p class="trainer-role">HIIT &amp; Box Fit</p>
+              <p>Former amateur boxer and group-fitness lead. Her playlists are loud and her cues are louder &mdash; in the best way.</p>
+            </div>
+          </article>
+          <article class="trainer-card reveal">
+            <div class="trainer-img"><img src="trainer3.jpg" alt="Coach Aisyah doing a core crunch on a mat by a sunny window" loading="lazy"></div>
+            <div class="trainer-info">
+              <h3>Coach Aisyah</h3>
+              <p class="trainer-role">Mobility &amp; Recovery</p>
+              <p>Yoga-trained mobility specialist focused on posture, injury prevention and helping busy professionals move pain-free.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMBERSHIP -->
+    <section class="membership" id="membership" aria-labelledby="membership-title">
+      <div class="container">
+        <p class="section-label center">Membership</p>
+        <h2 class="section-title center" id="membership-title">Simple plans. No joining fee.</h2>
+        <div class="plan-grid">
+          <article class="plan-card reveal">
+            <h3>Drop-In</h3>
+            <p class="plan-price"><span class="cur">RM</span>45<span class="per">/ class</span></p>
+            <ul class="plan-list">
+              <li>Any group class</li>
+              <li>Towel &amp; locker included</li>
+              <li>No commitment</li>
+            </ul>
+            <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20drop-in%20class%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-outline btn-block" target="_blank" rel="noopener">Book a Drop-In</a>
+          </article>
+          <article class="plan-card plan-featured reveal">
+            <p class="plan-badge">Most popular</p>
+            <h3>Unlimited Monthly</h3>
+            <p class="plan-price"><span class="cur">RM</span>329<span class="per">/ month</span></p>
+            <ul class="plan-list">
+              <li>Unlimited group classes</li>
+              <li>Free InBody scan every month</li>
+              <li>1 guest pass per month</li>
+              <li>Priority booking on WhatsApp</li>
+            </ul>
+            <a href="https://wa.me/60199403681?text=Hi%2C%20I%27m%20interested%20in%20the%20Unlimited%20Monthly%20membership%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-primary btn-block" target="_blank" rel="noopener">Join Unlimited</a>
+          </article>
+          <article class="plan-card reveal">
+            <h3>10-Class Pack</h3>
+            <p class="plan-price"><span class="cur">RM</span>350<span class="per">/ pack</span></p>
+            <ul class="plan-list">
+              <li>RM35 per class</li>
+              <li>Valid for 3 months</li>
+              <li>Shareable with a friend</li>
+            </ul>
+            <a href="https://wa.me/60199403681?text=Hi%2C%20I%27m%20interested%20in%20the%2010-Class%20Pack%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-outline btn-block" target="_blank" rel="noopener">Get the Pack</a>
+          </article>
+        </div>
+        <p class="plan-note">Students get 20% off Unlimited with a valid student ID. Personal training from RM150 per session.</p>
+      </div>
+    </section>
+
+    <!-- TRIAL CTA + AUTO-REPLY -->
+    <section class="trial" id="trial" aria-labelledby="trial-title">
+      <div class="container trial-grid">
+        <div class="trial-copy reveal">
+          <p class="section-label">Free trial class</p>
+          <h2 class="section-title" id="trial-title">Message us. We reply in seconds.</h2>
+          <p>Send us a WhatsApp and our auto-reply instantly sends this week&rsquo;s timetable, open trial slots and directions &mdash; any time of day. A coach then confirms your spot personally.</p>
+          <ol class="trial-steps">
+            <li><span><strong>Say hi on WhatsApp</strong> &mdash; tell us your goal.</span></li>
+            <li><span><strong>Pick a slot</strong> from the timetable we send back.</span></li>
+            <li><span><strong>Show up 10 minutes early</strong> &mdash; we&rsquo;ll handle the rest.</span></li>
+          </ol>
+          <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class%20at%20Ironbloom%20Fitness%20Studio." class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Book My Free Trial
+          </a>
+        </div>
+        <figure class="chat reveal" aria-label="Example WhatsApp conversation showing the instant auto-reply">
+          <div class="chat-head">
+            <span class="chat-avatar" aria-hidden="true">IB</span>
+            <div><strong>Ironbloom Fitness</strong><span>Business account &middot; replies instantly</span></div>
+          </div>
+          <div class="chat-body">
+            <p class="bubble bubble-out">Hi, I&rsquo;d like to book a free trial class at Ironbloom Fitness Studio.<span class="bubble-time">9:41 PM</span></p>
+            <p class="bubble bubble-in">Hi there! 👋 Thanks for messaging Ironbloom. Here are this week&rsquo;s open trial slots:<br><br>&bull; Tue 7:00 PM &ndash; Box Fit<br>&bull; Wed 6:30 PM &ndash; Strength Lab<br>&bull; Sat 9:30 AM &ndash; HIIT Burn<br><br>Reply with the slot you want and a coach will confirm shortly. 💪<span class="bubble-time">9:41 PM</span></p>
+            <p class="bubble bubble-out">Sat 9:30 please!<span class="bubble-time">9:42 PM</span></p>
+          </div>
+          <figcaption class="chat-caption">Automated WhatsApp reply &mdash; works 24/7, even when the studio is closed.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <p class="section-label">Inside the studio</p>
+        <h2 class="section-title" id="gallery-title">Built for serious sweat</h2>
+        <div class="gallery-grid">
+          <figure class="gallery-item g-wide reveal"><img src="image1.jpg" alt="Group of women doing a mat-based glute workout in a bright studio" loading="lazy"></figure>
+          <figure class="gallery-item reveal"><img src="image2.jpg" alt="Rows of dumbbells on a rack beside the training floor" loading="lazy"></figure>
+          <figure class="gallery-item g-tall reveal"><img src="trainer2.jpg" alt="Coach Sara doing a core exercise on the studio floor" loading="lazy"></figure>
+          <figure class="gallery-item reveal"><img src="image3.jpg" alt="Athlete slamming battle ropes in an open-air training area" loading="lazy"></figure>
+          <figure class="gallery-item g-wide reveal"><img src="hero.jpg" alt="Athlete gripping a loaded barbell on the gym floor, ready to lift" loading="lazy"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="location" id="location" aria-labelledby="location-title">
+      <div class="container location-grid">
+        <div class="location-info reveal">
+          <p class="section-label">Find us</p>
+          <h2 class="section-title" id="location-title">Right in SS2</h2>
+          <address>
+            1-2, Jalan SS 2/64, SS 2,<br>
+            47300 Petaling Jaya, Selangor
+          </address>
+          <p class="location-note">First floor above the pharmacy. Free parking after 6 PM and on weekends; 5 minutes from the SS2 night market.</p>
+          <div class="hours">
+            <h3>Studio hours</h3>
+            <dl>
+              <div class="hours-row"><dt>Mon &ndash; Fri</dt><dd>6:00 AM &ndash; 10:00 PM</dd></div>
+              <div class="hours-row"><dt>Saturday</dt><dd>7:30 AM &ndash; 1:00 PM</dd></div>
+              <div class="hours-row"><dt>Sunday</dt><dd>8:30 AM &ndash; 12:00 PM</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="location-map reveal">
+          <iframe
+            src="https://www.google.com/maps?q=SS2%2C%20Petaling%20Jaya%2C%20Selangor&amp;z=15&amp;output=embed"
+            width="600"
+            height="450"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Map showing Ironbloom Fitness Studio in SS2, Petaling Jaya">
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <p class="section-label">Contact</p>
+          <h2 class="section-title" id="contact-title">Questions? Ask a coach.</h2>
+          <p>Fill this in and we&rsquo;ll open WhatsApp with your message ready to send &mdash; no forms disappearing into an inbox.</p>
+          <ul class="contact-list">
+            <li><span>WhatsApp</span><a href="https://wa.me/60199403681?text=Hi%2C%20I%20have%20a%20question%20about%20Ironbloom%20Fitness%20Studio." target="_blank" rel="noopener">+60 19-940 3681</a></li>
+            <li><span>Email</span><a href="mailto:hello@ironbloom.example">hello@ironbloom.example</a></li>
+            <li><span>Instagram</span><span class="contact-val">@ironbloom.pj</span></li>
+          </ul>
+        </div>
+        <form class="enquiry-form reveal" id="enquiryForm" novalidate>
+          <div class="field">
+            <label for="fName">Your name</label>
+            <input type="text" id="fName" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="fGoal">Main goal</label>
+            <select id="fGoal" name="goal">
+              <option>Build strength</option>
+              <option>Lose fat</option>
+              <option>Learn boxing</option>
+              <option>Improve mobility</option>
+              <option>Just getting started</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fTime">Preferred time</label>
+            <select id="fTime" name="time">
+              <option>Early morning (6&ndash;8 AM)</option>
+              <option>Lunchtime</option>
+              <option>After work (6&ndash;9 PM)</option>
+              <option>Weekends</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fMsg">Anything we should know? <span class="optional">(optional)</span></label>
+            <textarea id="fMsg" name="message" rows="3" placeholder="Injuries, experience level, questions&hellip;"></textarea>
+          </div>
+          <p class="form-error" id="formError" role="alert" hidden>Please tell us your name so the coach knows who to reply to.</p>
+          <button type="submit" class="btn btn-primary btn-block">Send on WhatsApp</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="nav-logo"><span class="logo-mark" aria-hidden="true"></span><span class="logo-word">IRON<span>BLOOM</span></span></p>
+        <p>Small-group strength &amp; conditioning in Petaling Jaya.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#timetable">Timetable</a>
+        <a href="#programmes">Programmes</a>
+        <a href="#trainers">Trainers</a>
+        <a href="#membership">Membership</a>
+        <a href="#location">Location</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Ironbloom Fitness Studio. A fictional business for demonstration.</p>
+      <p>Concept website by <a href="/" target="_blank" rel="noopener">SR Digital Solution</a></p>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/60199403681?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class%20at%20Ironbloom%20Fitness%20Studio." class="wa-float" target="_blank" rel="noopener" aria-label="Book a free trial class on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

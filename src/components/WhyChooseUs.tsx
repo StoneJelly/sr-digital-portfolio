@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { DollarSign, Zap, Smartphone, MessageSquare } from "lucide-react";
-import SectionHeading from "./ui/SectionHeading";
+import Reveal from "./ui/Reveal";
 
 const features = [
   {
@@ -33,32 +32,52 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          title="Why Choose SR Digital Solution?"
-          subtitle="Professional digital solutions without the complicated agency process."
-        />
+    <section
+      aria-labelledby="why-heading"
+      className="border-y border-border bg-surface py-[72px] min-[800px]:py-[105px]"
+    >
+      <div className="container-page grid gap-10 min-[800px]:grid-cols-[1fr_2fr] min-[800px]:gap-20">
+        <Reveal>
+          <p className="eyebrow">01 / Why choose us</p>
+        </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-surface border border-border rounded-2xl p-6 sm:p-8 hover:border-accent/20 transition-colors"
-            >
-              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
-                <feature.icon className="w-6 h-6 text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-text-secondary leading-relaxed">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
+        <div className="min-w-0">
+          <Reveal>
+            <h2 id="why-heading" className="heading-display">
+              Why Choose <span>SR Digital Solution?</span>
+            </h2>
+            <p className="mt-7 max-w-[575px] text-base leading-[1.65] text-text-secondary">
+              Professional digital solutions without the complicated agency
+              process.
+            </p>
+          </Reveal>
+
+          <ol className="mt-10 grid gap-x-10 md:grid-cols-2">
+            {features.map((feature, index) => (
+              <Reveal
+                as="li"
+                key={feature.title}
+                delay={index * 0.06}
+                className="grid grid-cols-[35px_1fr_20px] items-start gap-2.5 border-t border-border py-[21px] last:border-b md:[&:nth-last-child(2)]:border-b"
+              >
+                <span className="pt-0.5 text-[0.6875rem] font-medium text-accent">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="mb-[7px] text-[0.9375rem] font-bold text-foreground">
+                    {feature.title}
+                  </h3>
+                  <p className="text-[0.8125rem] leading-[1.5] text-text-secondary">
+                    {feature.description}
+                  </p>
+                </div>
+                <feature.icon
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 text-accent"
+                />
+              </Reveal>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

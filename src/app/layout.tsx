@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
+import MotionProvider from "@/components/ui/MotionProvider";
+import { siteConfig } from "@/data/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: "SR Digital Solution | Affordable Websites & Web Applications",
   description:
     "Professional, modern websites and web applications for businesses, startups and individuals in Malaysia — without the high agency price. Websites from RM500.",
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
     title: "SR Digital Solution | Affordable Websites & Web Applications",
     description:
       "Professional, modern websites and web applications for businesses, startups and individuals — without the high agency price.",
-    url: "https://srdigitalsolution.com",
+    url: siteConfig.url,
     siteName: "SR Digital Solution",
     locale: "en_MY",
     type: "website",
@@ -58,12 +56,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} h-full antialiased`}
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }
