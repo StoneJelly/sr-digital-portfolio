@@ -2,8 +2,12 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export type ProjectCardLayout = "tall" | "stacked" | "half" | "wide";
+
 interface ProjectCardProps {
   index: number;
+  /** The card's slot in the Projects grid; sets the preview height. */
+  layout: ProjectCardLayout;
   slug: string;
   name: string;
   category: string;
@@ -14,35 +18,32 @@ interface ProjectCardProps {
 
 const MAX_TAGS = 3;
 
-// Per-card preview styling from the reference design (.project-one/two/three).
-// Tints are the design's preview backgrounds; there are no tokens for them.
-const previewVariants = [
-  {
-    tint: "bg-[#d9ebe6]",
-    height: "min-h-[390px] md:min-h-[620px]",
-    frame: "left-[15%] top-[15%] h-[70%] w-[70%] -rotate-5 group-hover:-rotate-3",
-  },
-  {
-    tint: "bg-[#f3e8d9]",
-    height: "min-h-[270px] md:min-h-[300px]",
-    frame: "left-[18%] top-[19%] h-[64%] w-[64%] rotate-5 group-hover:rotate-3",
-  },
-  {
-    tint: "bg-[#e3e6f0]",
-    height: "min-h-[270px] md:min-h-[300px]",
-    frame: "left-[15%] top-[15%] h-[70%] w-[70%] -rotate-3 group-hover:-rotate-2",
-  },
-  {
-    // Full-width card: narrower frame so the screenshot keeps a natural ratio.
-    tint: "bg-[#d9ebe6]",
-    height: "min-h-[270px] md:min-h-[360px]",
-    frame:
-      "left-[15%] top-[15%] h-[70%] w-[70%] rotate-3 group-hover:rotate-2 md:left-[27%] md:top-[13%] md:h-[74%] md:w-[46%]",
-  },
+// Preview tints from the reference design (.project-one/two/three), cycled by
+// index. They are the design's preview backgrounds; there are no tokens for them.
+const tints = ["bg-[#d9ebe6]", "bg-[#f3e8d9]", "bg-[#e3e6f0]"];
+
+// Screenshot frame position + tilt, cycled by index so neighbours differ.
+const frames = [
+  "left-[15%] top-[15%] h-[70%] w-[70%] -rotate-5 group-hover:-rotate-3",
+  "left-[18%] top-[19%] h-[64%] w-[64%] rotate-5 group-hover:rotate-3",
+  "left-[15%] top-[15%] h-[70%] w-[70%] -rotate-3 group-hover:-rotate-2",
+  "left-[15%] top-[15%] h-[70%] w-[70%] rotate-3 group-hover:rotate-2",
 ];
+
+// Preview height per grid slot (the grid is one column below md).
+const heights: Record<ProjectCardLayout, string> = {
+  tall: "min-h-[390px] md:min-h-[620px]",
+  stacked: "min-h-[270px] md:min-h-[300px]",
+  half: "min-h-[270px] md:min-h-[340px]",
+  wide: "min-h-[270px] md:min-h-[360px]",
+};
+
+// Full-width card: narrower frame so the screenshot keeps a natural ratio.
+const wideFrame = "md:left-[27%] md:top-[13%] md:h-[74%] md:w-[46%]";
 
 export default function ProjectCard({
   index,
+  layout,
   slug,
   name,
   category,
@@ -50,8 +51,6 @@ export default function ProjectCard({
   features,
   image,
 }: ProjectCardProps) {
-  // Index 3+ are full-width cards in the grid, so they all share the last variant.
-  const variant = previewVariants[Math.min(index, previewVariants.length - 1)];
   const extra = features.length - MAX_TAGS;
 
   return (
@@ -59,14 +58,15 @@ export default function ProjectCard({
       <div
         className={cn(
           "relative flex-1 overflow-hidden rounded-[var(--radius-card)]",
-          variant.tint,
-          variant.height
+          tints[index % tints.length],
+          heights[layout]
         )}
       >
         <div
           className={cn(
             "absolute flex flex-col bg-surface p-2.5 shadow-[var(--shadow-md)] transition-transform duration-300 ease-out sm:p-3.5",
-            variant.frame
+            frames[index % frames.length],
+            layout === "wide" && wideFrame
           )}
         >
           <div className="flex gap-1 border-b border-border pb-2.5" aria-hidden="true">
