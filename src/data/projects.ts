@@ -37,6 +37,30 @@ export const projects: Project[] = [
     demo: "/demos/spice-and-co/index.html",
   },
   {
+    slug: "ironbloom",
+    name: "Ironbloom Fitness Studio",
+    category: "Fitness Studio Website",
+    description:
+      "A bold fitness studio website concept with a weekly class timetable, membership plans and instant WhatsApp booking for free trial classes.",
+    objective:
+      "Ironbloom Fitness Studio needed a website that shows the weekly class schedule at a glance, presents membership pricing clearly, and turns visitors into trial-class bookings without back-and-forth phone calls.",
+    solution:
+      "We designed an energetic single-page website with a filterable weekly timetable that switches to day tabs on mobile, programme and coach profiles, transparent RM pricing, and WhatsApp CTAs set up for auto-replies to enquiries and trial bookings.",
+    features: [
+      "Class timetable",
+      "Programmes",
+      "Trainer profiles",
+      "Membership plans",
+      "WhatsApp trial booking",
+      "Gallery",
+      "Google Maps",
+      "Responsive design",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Google Maps API"],
+    image: "/demos/ironbloom/hero.jpg",
+    demo: "/demos/ironbloom/index.html",
+  },
+  {
     slug: "elite-autocare",
     name: "Elite AutoCare",
     category: "Automotive Business Website",
