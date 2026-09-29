@@ -1,47 +1,167 @@
 @import "tailwindcss";
 
+/*
+ * SR Digital Solution — light design system.
+ * Token names are shared by every component; change values here, not in components.
+ */
 @theme inline {
-  --color-background: #0a0a0f;
-  --color-foreground: #f0f0f5;
-  --color-surface: #111118;
-  --color-surface-hover: #1a1a24;
-  --color-border: #1e1e2a;
-  --color-text-secondary: #8888a0;
-  --color-accent: #3b82f6;
-  --color-accent-hover: #2563eb;
-  --color-success: #22c55e;
+  /* Surfaces */
+  --color-background: #faf9f6;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f3f1ec;
+  --color-surface-hover: #f5f4f0;
+
+  /* Lines */
+  --color-border: #e6e3dc;
+  --color-border-strong: #d6d2c9;
+
+  /* Text */
+  --color-foreground: #17171c;
+  --color-text-secondary: #5a5a66;
+  --color-text-tertiary: #72727d;
+
+  /* Brand */
+  --color-accent: #2451d6;
+  --color-accent-hover: #1c41b0;
+  --color-accent-soft: #eef2fd;
+
+  /* Status */
+  --color-success: #15803d;
+  --color-success-soft: #ecf7ef;
+  --color-danger: #b42318;
+  --color-whatsapp: #128c4b;
+  --color-whatsapp-hover: #0e7340;
+
+  /* Type */
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-jakarta);
+
+  /* Depth — layered, low-opacity warm gray */
+  --shadow-xs: 0 1px 2px rgb(23 23 28 / 0.05);
+  --shadow-sm: 0 1px 2px rgb(23 23 28 / 0.04), 0 2px 6px rgb(23 23 28 / 0.04);
+  --shadow-md: 0 2px 4px rgb(23 23 28 / 0.04), 0 8px 24px rgb(23 23 28 / 0.06);
+  --shadow-lg: 0 4px 8px rgb(23 23 28 / 0.04), 0 20px 48px rgb(23 23 28 / 0.08);
+
+  /* Radii */
+  --radius-card: 1rem;
+  --radius-control: 0.625rem;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Page container: one max width, consistent gutters */
+@utility container-page {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Vertical section rhythm */
+@utility section {
+  padding-block: 5rem;
+  @media (width >= 64rem) {
+    padding-block: 7rem;
+  }
+}
+
+/* Small uppercase kicker above headings */
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Animated underline for text links */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 200ms var(--ease-out-soft), color 150ms ease;
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
-::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #ffffff;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
+p {
+  text-wrap: pretty;
 }
 
-::-webkit-scrollbar-track {
-  background: #0a0a0f;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #2a2a3a;
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
   border-radius: 4px;
 }
 
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-foreground);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border: 2px solid var(--color-background);
+  border-radius: 999px;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a4a;
+  background: #bdb8ad;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
