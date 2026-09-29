@@ -4,14 +4,12 @@ import { useState, useRef, useId, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MessageCircle,
-  Mail,
   Send,
   CheckCircle,
   X,
   ArrowUpRight,
   ChevronDown,
   AlertCircle,
-  MapPin,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import SectionHeading from "./ui/SectionHeading";
@@ -21,23 +19,6 @@ import { emailjsConfig } from "@/lib/emailjs";
 import { siteConfig } from "@/data/site";
 import { cn } from "@/lib/utils";
 
-const contactOptions = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    detail: "Chat with Us",
-    href: siteConfig.whatsappQuoteUrl,
-    tile: "bg-success-soft text-whatsapp",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    detail: siteConfig.email,
-    href: `mailto:${siteConfig.email}`,
-    tile: "bg-accent-soft text-accent",
-  },
-];
-
 const projectTypes = [
   "Business Website",
   "Landing Page",
@@ -46,13 +27,15 @@ const projectTypes = [
   "Other",
 ];
 
-const inputBase =
-  "w-full bg-surface border rounded-[var(--radius-control)] px-3.5 text-sm text-foreground placeholder:text-text-tertiary outline-none transition-[border-color,box-shadow] duration-150 focus:border-accent focus:ring-4 focus:ring-accent/10";
+const labelClass =
+  "block text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-text-tertiary";
 
-function inputClass(hasError: boolean) {
+function fieldClass(hasError: boolean) {
   return cn(
-    inputBase,
-    hasError ? "border-danger" : "border-border hover:border-border-strong"
+    "block w-full rounded-none border-0 border-b bg-transparent py-[13px] text-sm text-foreground placeholder:text-text-tertiary outline-none transition-[border-color,box-shadow] duration-150 focus:border-accent focus:shadow-[0_1px_0_0_var(--color-accent)]",
+    hasError
+      ? "border-danger focus:border-danger focus:shadow-[0_1px_0_0_var(--color-danger)]"
+      : "border-border hover:border-border-strong"
   );
 }
 
@@ -66,10 +49,7 @@ function FieldLabel({
   required?: boolean;
 }) {
   return (
-    <label
-      htmlFor={htmlFor}
-      className="mb-1.5 block text-sm font-medium text-foreground"
-    >
+    <label htmlFor={htmlFor} className={labelClass}>
       {children}
       {required && (
         <>
@@ -86,7 +66,7 @@ function FieldLabel({
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} className="mt-1.5 flex items-center gap-1.5 text-xs text-danger">
+    <p id={id} className="mt-2 flex items-center gap-1.5 text-xs text-danger">
       <AlertCircle aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
       {message}
     </p>
@@ -178,172 +158,179 @@ export default function Contact() {
     "aria-describedby": errors[name] ? eid(name) : undefined,
   });
 
+  const detailLink =
+    "group inline-flex items-center gap-1.5 text-[0.8125rem] font-bold text-foreground transition-colors hover:text-accent";
+
   return (
     <section id="contact" className="section bg-surface">
-      <div className="container-page">
-        <SectionHeading
-          eyebrow="Contact"
-          title="Let's Talk About Your Project"
-          subtitle="Have a website or web application idea? Send us a message and we'll get back to you with a quotation."
-        />
+      <div className="container-page grid grid-cols-1 gap-[55px] md:grid-cols-[0.85fr_1.15fr] md:gap-[60px] lg:gap-[120px]">
+        <Reveal>
+          <SectionHeading
+            eyebrow="08 / Get in touch"
+            align="left"
+            title="Let's Talk About"
+            highlight="Your Project"
+            className="mb-0 md:mb-0"
+          />
+          <p className="mt-7 mb-[42px] max-w-[350px] text-[0.9375rem] leading-relaxed text-text-secondary">
+            Have a website or web application idea? Send us a message and
+            we&apos;ll get back to you with a quotation.
+          </p>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
-          <Reveal className="lg:col-span-5">
-            <ul className="space-y-3">
-              {contactOptions.map((option) => {
-                const external = option.href.startsWith("http");
-                return (
-                  <li key={option.title}>
-                    <a
-                      href={option.href}
-                      target={external ? "_blank" : undefined}
-                      rel={external ? "noopener noreferrer" : undefined}
-                      className="group flex items-center gap-4 rounded-2xl border border-border bg-surface p-4 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-[var(--shadow-sm)] sm:p-5"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)]",
-                          option.tile
-                        )}
-                      >
-                        <option.icon className="h-5 w-5" />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-foreground">
-                          {option.title}
-                        </span>
-                        <span className="block truncate text-sm text-text-secondary">
-                          {option.detail}
-                        </span>
-                      </span>
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className="h-4 w-4 shrink-0 text-text-tertiary transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
-                      />
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="mt-6 flex items-center gap-2 text-sm text-text-tertiary">
-              <MapPin aria-hidden="true" className="h-4 w-4" />
-              Based in {siteConfig.location}
-            </p>
-          </Reveal>
-
-          <Reveal className="lg:col-span-7" delay={0.08}>
-            <form
-              ref={formRef}
-              onSubmit={handleSubmit}
-              noValidate
-              className="space-y-5 rounded-2xl border border-border bg-background p-6 shadow-[var(--shadow-sm)] sm:p-8"
-            >
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <FieldLabel htmlFor={fid("from_name")} required>
-                    Name
-                  </FieldLabel>
-                  <input
-                    type="text"
-                    name="from_name"
-                    autoComplete="name"
-                    value={formData.from_name}
-                    onChange={handleChange}
-                    className={cn(inputClass(!!errors.from_name), "h-11")}
-                    placeholder="Your name"
-                    {...a11y("from_name")}
+          <dl>
+            <div className="border-t border-border py-[15px]">
+              <dt className={cn(labelClass, "mb-[7px]")}>WhatsApp</dt>
+              <dd>
+                <a
+                  href={siteConfig.whatsappQuoteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={detailLink}
+                >
+                  Chat with Us
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 text-text-tertiary transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
                   />
-                  <FieldError id={eid("from_name")} message={errors.from_name} />
-                </div>
-                <div>
-                  <FieldLabel htmlFor={fid("from_email")} required>
-                    Email
-                  </FieldLabel>
-                  <input
-                    type="email"
-                    name="from_email"
-                    autoComplete="email"
-                    value={formData.from_email}
-                    onChange={handleChange}
-                    className={cn(inputClass(!!errors.from_email), "h-11")}
-                    placeholder="your@email.com"
-                    {...a11y("from_email")}
-                  />
-                  <FieldError id={eid("from_email")} message={errors.from_email} />
-                </div>
-              </div>
+                </a>
+              </dd>
+            </div>
+            <div className="border-t border-border py-[15px]">
+              <dt className={cn(labelClass, "mb-[7px]")}>Email</dt>
+              <dd>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className={cn(detailLink, "break-all")}
+                >
+                  {siteConfig.email}
+                </a>
+              </dd>
+            </div>
+            <div className="border-y border-border py-[15px]">
+              <dt className={cn(labelClass, "mb-[7px]")}>Location</dt>
+              <dd className="text-[0.8125rem] font-bold text-foreground">
+                {siteConfig.location}
+              </dd>
+            </div>
+          </dl>
+        </Reveal>
 
+        <Reveal delay={0.08}>
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            noValidate
+            className="flex flex-col gap-[22px]"
+          >
+            <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 sm:gap-5">
               <div>
-                <FieldLabel htmlFor={fid("business")}>Business Name</FieldLabel>
+                <FieldLabel htmlFor={fid("from_name")} required>
+                  Name
+                </FieldLabel>
                 <input
                   type="text"
-                  name="business"
-                  autoComplete="organization"
-                  value={formData.business}
+                  name="from_name"
+                  autoComplete="name"
+                  value={formData.from_name}
                   onChange={handleChange}
-                  className={cn(inputClass(false), "h-11")}
-                  placeholder="Your business name (optional)"
-                  id={fid("business")}
+                  className={fieldClass(!!errors.from_name)}
+                  placeholder="Your name"
+                  {...a11y("from_name")}
+                />
+                <FieldError id={eid("from_name")} message={errors.from_name} />
+              </div>
+              <div>
+                <FieldLabel htmlFor={fid("from_email")} required>
+                  Email
+                </FieldLabel>
+                <input
+                  type="email"
+                  name="from_email"
+                  autoComplete="email"
+                  value={formData.from_email}
+                  onChange={handleChange}
+                  className={fieldClass(!!errors.from_email)}
+                  placeholder="your@email.com"
+                  {...a11y("from_email")}
+                />
+                <FieldError id={eid("from_email")} message={errors.from_email} />
+              </div>
+            </div>
+
+            <div>
+              <FieldLabel htmlFor={fid("business")}>Business Name</FieldLabel>
+              <input
+                type="text"
+                name="business"
+                autoComplete="organization"
+                value={formData.business}
+                onChange={handleChange}
+                className={fieldClass(false)}
+                placeholder="Your business name (optional)"
+                id={fid("business")}
+              />
+            </div>
+
+            <div>
+              <FieldLabel htmlFor={fid("project_type")} required>
+                Project Type
+              </FieldLabel>
+              <div className="relative">
+                <select
+                  name="project_type"
+                  value={formData.project_type}
+                  onChange={handleChange}
+                  className={cn(
+                    fieldClass(!!errors.project_type),
+                    "cursor-pointer appearance-none pr-8",
+                    !formData.project_type && "text-text-tertiary"
+                  )}
+                  {...a11y("project_type")}
+                >
+                  <option value="">Select project type</option>
+                  {projectTypes.map((type) => (
+                    <option key={type} value={type} className="text-foreground">
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary"
                 />
               </div>
+              <FieldError id={eid("project_type")} message={errors.project_type} />
+            </div>
 
-              <div>
-                <FieldLabel htmlFor={fid("project_type")} required>
-                  Project Type
-                </FieldLabel>
-                <div className="relative">
-                  <select
-                    name="project_type"
-                    value={formData.project_type}
-                    onChange={handleChange}
-                    className={cn(
-                      inputClass(!!errors.project_type),
-                      "h-11 cursor-pointer appearance-none pr-10",
-                      !formData.project_type && "text-text-tertiary"
-                    )}
-                    {...a11y("project_type")}
-                  >
-                    <option value="">Select project type</option>
-                    {projectTypes.map((type) => (
-                      <option key={type} value={type} className="text-foreground">
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    aria-hidden="true"
-                    className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary"
-                  />
-                </div>
-                <FieldError id={eid("project_type")} message={errors.project_type} />
-              </div>
+            <div>
+              <FieldLabel htmlFor={fid("message")} required>
+                Message
+              </FieldLabel>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={5}
+                className={cn(fieldClass(!!errors.message), "resize-y")}
+                placeholder="Tell us about your project..."
+                {...a11y("message")}
+              />
+              <FieldError id={eid("message")} message={errors.message} />
+            </div>
 
-              <div>
-                <FieldLabel htmlFor={fid("message")} required>
-                  Message
-                </FieldLabel>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className={cn(inputClass(!!errors.message), "resize-none py-3")}
-                  placeholder="Tell us about your project..."
-                  {...a11y("message")}
-                />
-                <FieldError id={eid("message")} message={errors.message} />
-              </div>
-
-              <Button type="submit" size="lg" className="w-full" disabled={sending}>
-                <Send aria-hidden="true" className="h-4 w-4" />
-                <span aria-live="polite">
-                  {sending ? "Sending..." : "Request a Free Quote"}
-                </span>
-              </Button>
-            </form>
-          </Reveal>
-        </div>
+            <Button
+              type="submit"
+              size="lg"
+              className="mt-[3px] w-full sm:w-auto sm:self-start"
+              disabled={sending}
+            >
+              <Send aria-hidden="true" className="h-4 w-4" />
+              <span aria-live="polite">
+                {sending ? "Sending..." : "Request a Free Quote"}
+              </span>
+            </Button>
+          </form>
+        </Reveal>
       </div>
 
       <AnimatePresence>
@@ -353,7 +340,7 @@ export default function Contact() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 px-4 backdrop-blur-[2px]"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 px-5 backdrop-blur-[2px]"
             onClick={() => setShowSuccess(false)}
           >
             <motion.div
@@ -364,31 +351,34 @@ export default function Contact() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="relative w-full max-w-md rounded-2xl border border-border bg-surface p-8 text-center shadow-[var(--shadow-lg)] sm:p-10"
+              className="relative w-full max-w-md rounded-[var(--radius-card)] border border-border bg-surface p-8 text-left shadow-[var(--shadow-lg)] sm:p-10"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
                 onClick={() => setShowSuccess(false)}
                 aria-label="Close"
-                className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-surface-muted hover:text-foreground cursor-pointer"
+                className="absolute right-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--radius-control)] text-text-secondary transition-colors hover:bg-surface-hover hover:text-foreground"
               >
                 <X aria-hidden="true" className="h-5 w-5" />
               </button>
 
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-success-soft text-success">
-                <CheckCircle aria-hidden="true" className="h-7 w-7" />
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-[var(--radius-card)] bg-success-soft text-success">
+                <CheckCircle aria-hidden="true" className="h-6 w-6" />
               </div>
 
-              <h3 id={modalTitleId} className="mb-2 text-xl font-bold text-foreground">
+              <h3
+                id={modalTitleId}
+                className="mb-2 text-2xl font-bold tracking-[-0.04em] text-foreground"
+              >
                 Message Sent!
               </h3>
-              <p className="mb-6 text-text-secondary">
+              <p className="mb-8 text-sm leading-relaxed text-text-secondary">
                 Thank you for your enquiry. We&apos;ll get back to you with a
                 quotation shortly.
               </p>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <Button href={siteConfig.whatsappFollowUpUrl} variant="whatsapp">
                   <MessageCircle aria-hidden="true" className="h-4 w-4" />
                   Also Chat on WhatsApp
@@ -397,7 +387,7 @@ export default function Contact() {
                   ref={closeButtonRef}
                   type="button"
                   onClick={() => setShowSuccess(false)}
-                  className="inline-flex h-11 items-center justify-center rounded-[var(--radius-control)] px-5 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-muted hover:text-foreground cursor-pointer"
+                  className="inline-flex h-11 cursor-pointer items-center justify-center rounded-[var(--radius-control)] px-5 text-[0.8125rem] font-bold text-text-secondary transition-colors hover:bg-surface-hover hover:text-foreground"
                 >
                   Close
                 </button>

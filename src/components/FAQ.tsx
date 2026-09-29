@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import SectionHeading from "./ui/SectionHeading";
 import AccordionItem from "./ui/AccordionItem";
 import Reveal from "./ui/Reveal";
@@ -6,41 +6,35 @@ import { faqs } from "@/data/faq";
 
 export default function FAQ() {
   return (
-    <section id="faq" className="section bg-background">
-      <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
+    <section id="faq" className="section border-t border-border bg-surface">
+      <div className="container-page grid grid-cols-1 gap-[45px] md:grid-cols-[1fr_1.05fr] md:gap-[60px] lg:gap-[120px]">
+        <div className="self-start md:sticky md:top-28">
           <SectionHeading
-            eyebrow="FAQ"
+            eyebrow="07 / FAQ"
             align="left"
-            title="Frequently Asked Questions"
+            title="Frequently Asked"
+            highlight="Questions"
             subtitle="Common questions about our services and process."
-            className="mb-6 lg:mb-8"
+            className="mb-8 md:mb-10"
           />
-          <p className="text-sm text-text-secondary">
-            Still have questions?{" "}
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-1 font-semibold text-accent link-underline"
-            >
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-text-secondary">
+            Still have questions?
+            <a href="#contact" className="text-link text-foreground">
               Contact
-              <ArrowRight
-                aria-hidden="true"
-                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
-              />
+              <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </a>
           </p>
         </div>
 
-        <Reveal className="lg:col-span-8">
-          <div className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface shadow-[var(--shadow-xs)]">
-            {faqs.map((faq) => (
-              <AccordionItem
-                key={faq.question}
-                question={faq.question}
-                answer={faq.answer}
-              />
-            ))}
-          </div>
+        <Reveal>
+          {faqs.map((faq, i) => (
+            <AccordionItem
+              key={faq.question}
+              index={i}
+              question={faq.question}
+              answer={faq.answer}
+            />
+          ))}
         </Reveal>
       </div>
     </section>
