@@ -50,7 +50,8 @@ export default function ProjectCard({
   features,
   image,
 }: ProjectCardProps) {
-  const variant = previewVariants[index % previewVariants.length];
+  // Index 3+ are full-width cards in the grid, so they all share the last variant.
+  const variant = previewVariants[Math.min(index, previewVariants.length - 1)];
   const extra = features.length - MAX_TAGS;
 
   return (

@@ -6,9 +6,10 @@ import { cn } from "@/lib/utils";
 
 // Grid placement on md+ (design's .projects-grid): the first project is the tall
 // feature card spanning two rows beside projects 2 and 3; any project after
-// that runs full width so the grid never leaves an empty cell.
-function placement(index: number) {
-  if (index === 0) return "md:row-span-2";
+// that runs full width so the grid never leaves an empty cell (the tall span
+// is only used when there are at least 3 projects to sit beside it).
+function placement(index: number, total: number) {
+  if (index === 0) return total >= 3 ? "md:row-span-2" : undefined;
   if (index >= 3) return "md:col-span-2";
   return undefined;
 }
@@ -29,7 +30,7 @@ export default function Projects() {
               as="li"
               key={project.slug}
               delay={i * 0.06}
-              className={cn("flex", placement(i))}
+              className={cn("flex", placement(i, projects.length))}
             >
               <ProjectCard
                 index={i}
