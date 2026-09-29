@@ -1,7 +1,9 @@
-import SectionHeading from "./ui/SectionHeading";
+import { Fragment } from "react";
+import { BadgeDollarSign, MousePointerClick, Zap } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import { GithubIcon, LinkedinIcon } from "./ui/icons";
 import { siteConfig } from "@/data/site";
+import { cn } from "@/lib/utils";
 
 const techStack = {
   Frontend: ["Angular", "HTML", "CSS", "JavaScript", "TypeScript"],
@@ -10,7 +12,12 @@ const techStack = {
   Other: ["REST APIs", "Git", "GitHub", "AI-assisted development"],
 };
 
-const values = ["Affordability", "Usability", "Fast delivery"];
+// Value words lifted verbatim from the About copy: "affordability, usability and fast delivery".
+const values = [
+  { label: "Affordability", Icon: BadgeDollarSign },
+  { label: "Usability", Icon: MousePointerClick },
+  { label: "Fast delivery", Icon: Zap },
+];
 
 const socialLinks = [
   { label: "Sebastian Raj on GitHub", href: siteConfig.githubUrl, Icon: GithubIcon },
@@ -20,87 +27,143 @@ const socialLinks = [
 export default function About() {
   return (
     <section id="about" className="section bg-surface">
-      <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-7">
+      <div className="container-page grid items-center gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-[110px]">
+        {/* Copy */}
+        <div className="lg:order-2">
           <Reveal>
-            <SectionHeading
-              align="left"
-              eyebrow="About"
-              title="About SR Digital Solution"
-              subtitle="Professional digital solutions for businesses of all sizes."
-              className="mb-8 lg:mb-10"
-            />
+            <p className="eyebrow">05 / About</p>
+            <h2 className="heading-display mt-4">
+              About <span>SR Digital Solution</span>
+            </h2>
           </Reveal>
 
-          <Reveal delay={0.05} className="max-w-2xl space-y-5">
-            <p className="text-lg leading-relaxed text-foreground">
+          <Reveal delay={0.05} className="mb-9 mt-7 max-w-[30rem] space-y-4 text-[15px] leading-relaxed text-text-secondary">
+            <p className="font-medium text-foreground">
+              Professional digital solutions for businesses of all sizes.
+            </p>
+            <p>
               SR Digital Solution is a freelance web development service focused
               on helping small businesses, startups and individuals establish a
               professional online presence.
             </p>
-            <p className="text-lg leading-relaxed text-text-secondary">
+            <p>
               We build modern, responsive websites and custom web applications
               with a focus on affordability, usability and fast delivery.
             </p>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <ul
-              aria-label="Our focus"
-              className="mt-10 grid max-w-2xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3"
-            >
-              {values.map((value) => (
+            <ol aria-label="What we focus on" className="max-w-[30rem] border-t border-border">
+              {values.map(({ label }, index) => (
                 <li
-                  key={value}
-                  className="flex items-center gap-3 bg-surface px-5 py-4 font-display text-base font-semibold text-foreground"
+                  key={label}
+                  className="flex items-baseline gap-4 border-b border-border py-4"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                  />
-                  {value}
+                  <span className="text-[10px] tabular-nums text-accent">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[13px] font-bold text-foreground">{label}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </Reveal>
         </div>
+        {/* Visual: Meet the Developer card on a gridded panel */}
+        <Reveal className="relative grid lg:order-1 min-h-[350px] place-items-center overflow-hidden border border-border bg-surface-muted px-3 py-8 sm:px-6 lg:min-h-[430px] lg:py-12">
+          <div aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />
 
-        <Reveal delay={0.1} as="article" className="lg:col-span-5">
-          <div className="rounded-2xl border border-border bg-background p-6 shadow-[var(--shadow-sm)] sm:p-8">
-            <p className="eyebrow mb-5">Meet the Developer</p>
+          <article
+            aria-labelledby="developer-name"
+            className="relative w-full max-w-[30rem] bg-surface p-4 shadow-[var(--shadow-lg)] sm:w-[88%] sm:p-5 lg:w-[82%]"
+          >
+            <div className="flex items-center gap-2.5 border-b border-border pb-4 text-[10px] uppercase tracking-[0.08em] text-text-tertiary">
+              <span aria-hidden="true" className="h-[7px] w-[7px] rounded-full bg-accent" />
+              <span>Meet the developer</span>
+              <span aria-hidden="true" className="ml-auto tracking-normal">
+                •••
+              </span>
+            </div>
 
-            <div className="flex items-center gap-4">
+            <div className="mt-5 flex items-center gap-3.5">
               <div
                 aria-hidden="true"
-                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent-soft font-display text-lg font-bold text-accent"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent-soft text-sm font-bold text-accent"
               >
                 SR
               </div>
-              <div className="min-w-0">
-                <h3 className="text-xl font-bold text-foreground">Sebastian Raj</h3>
-                <p className="text-sm text-text-secondary">
-                  Freelance web developer
-                </p>
+              <div className="min-w-0 flex-1">
+                <h3 id="developer-name" className="text-base font-bold leading-tight tracking-[-0.02em] text-foreground">
+                  Sebastian Raj
+                </h3>
+                <p className="mt-0.5 text-xs text-text-secondary">Freelance web developer</p>
+              </div>
+              <div className="flex shrink-0 gap-1.5">
+                {socialLinks.map(({ label, href, Icon }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="grid h-8 w-8 place-items-center rounded-full border border-border text-text-secondary transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-surface"
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                  </a>
+                ))}
               </div>
             </div>
 
-            <p className="mt-6 leading-relaxed text-text-secondary">
+            <p className="mt-4 text-[13px] leading-relaxed text-text-secondary">
               A Computer Science (Artificial Intelligence) graduate and freelance
               web developer passionate about building practical digital solutions
               for businesses.
             </p>
 
-            <div className="mt-6 space-y-5 border-t border-border pt-6">
+            {/* Flow of our own value words (middle node active, as in the design) */}
+            <div
+              aria-hidden="true"
+              className="my-5 flex items-start justify-between gap-1 border-y border-border py-6"
+            >
+              {values.map(({ label, Icon }, index) => {
+                const active = index === 1;
+                return (
+                  <Fragment key={label}>
+                    {index > 0 && (
+                      <span
+                        className="mt-[19px] w-[14%] shrink border-t border-dashed border-border-strong"
+                      />
+                    )}
+                    <span className="flex min-w-0 flex-1 flex-col items-center text-center">
+                      <span
+                        className={cn(
+                          "mb-2.5 grid h-[38px] w-[38px] place-items-center rounded-full border",
+                          active
+                            ? "border-accent bg-accent text-surface"
+                            : "border-border text-text-tertiary"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="text-[10px] font-bold text-foreground sm:text-[11px]">
+                        {label}
+                      </span>
+                    </span>
+                  </Fragment>
+                );
+              })}
+            </div>
+
+            <div className="space-y-3">
               {Object.entries(techStack).map(([category, techs]) => (
                 <div key={category}>
-                  <h4 className="mb-2 font-sans text-xs font-semibold uppercase tracking-wider text-text-tertiary">
+                  <h4 className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-text-tertiary">
                     {category}
                   </h4>
-                  <ul className="flex flex-wrap gap-2">
+                  <ul className="flex flex-wrap gap-1.5">
                     {techs.map((tech) => (
                       <li
                         key={tech}
-                        className="rounded-full border border-border bg-surface-muted px-3 py-1 text-xs font-medium text-text-secondary"
+                        className="border border-border px-2 py-1 text-[10px] leading-none text-text-secondary"
                       >
                         {tech}
                       </li>
@@ -109,23 +172,9 @@ export default function About() {
                 </div>
               ))}
             </div>
-
-            <div className="mt-6 flex items-center gap-2 border-t border-border pt-6">
-              {socialLinks.map(({ label, href, Icon }) => (
-                <a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)] border border-border bg-surface text-text-secondary transition-colors duration-200 hover:border-border-strong hover:bg-surface-hover hover:text-foreground"
-                >
-                  <Icon className="h-[18px] w-[18px]" />
-                </a>
-              ))}
-            </div>
-          </div>
+          </article>
         </Reveal>
+
       </div>
     </section>
   );
