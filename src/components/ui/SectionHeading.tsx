@@ -2,33 +2,77 @@ import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
   title: string;
+  /** Optional second line rendered in the accent colour. */
+  highlight?: string;
   subtitle?: string;
+  /** Kicker, e.g. "02 / What we build". */
   eyebrow?: string;
-  align?: "center" | "left";
+  /**
+   * split: heading left, subtitle right (bottom-aligned) — default.
+   * left: stacked, left-aligned.
+   * center: stacked, centred.
+   */
+  align?: "split" | "left" | "center";
   className?: string;
 }
 
 export default function SectionHeading({
   title,
+  highlight,
   subtitle,
   eyebrow,
-  align = "center",
+  align = "split",
   className,
 }: SectionHeadingProps) {
+  const heading = (
+    <div>
+      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+      <h2 className={cn("heading-display", eyebrow && "mt-4")}>
+        {title}
+        {highlight && (
+          <>
+            <br />
+            <span>{highlight}</span>
+          </>
+        )}
+      </h2>
+    </div>
+  );
+
+  if (align === "split") {
+    return (
+      <div
+        className={cn(
+          "mb-10 md:mb-14 md:flex md:items-end md:justify-between md:gap-12",
+          className
+        )}
+      >
+        {heading}
+        {subtitle && (
+          <p className="mt-5 md:mt-0 md:mb-1 max-w-72 shrink-0 text-sm leading-relaxed text-text-secondary">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
-        "max-w-2xl mb-12 lg:mb-16",
-        align === "center" ? "mx-auto text-center" : "text-left",
+        "mb-10 md:mb-14 max-w-3xl",
+        align === "center" && "mx-auto text-center",
         className
       )}
     >
-      {eyebrow && <p className="eyebrow mb-4">{eyebrow}</p>}
-      <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold leading-[1.1] text-foreground">
-        {title}
-      </h2>
+      {heading}
       {subtitle && (
-        <p className="mt-4 text-text-secondary text-lg leading-relaxed">
+        <p
+          className={cn(
+            "mt-6 max-w-xl text-base leading-relaxed text-text-secondary",
+            align === "center" && "mx-auto"
+          )}
+        >
           {subtitle}
         </p>
       )}

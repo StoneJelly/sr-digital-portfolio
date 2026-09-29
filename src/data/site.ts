@@ -21,3 +21,11 @@ export const navLinks = [
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
+
+/**
+ * Home-page anchors ("#services") only resolve on "/". On other routes
+ * (e.g. /projects/[slug]) prefix with "/" so links return to the home section.
+ */
+export function homeHref(href: string, pathname: string | null) {
+  return href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
+}

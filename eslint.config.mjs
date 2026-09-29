@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design reference (v0 export) and agent worktrees are not part of the app.
+    "sr-digital-solutions-website-design/**",
+    ".claude/**",
   ]),
 ]);
 
