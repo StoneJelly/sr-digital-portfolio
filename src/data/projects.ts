@@ -81,6 +81,30 @@ export const projects: Project[] = [
     image: "/demos/novatech-solutions/image1.jpg",
   },
   {
+    slug: "tunas-minda",
+    name: "Tunas Minda Learning Centre",
+    category: "Tuition Centre Website",
+    description:
+      "A friendly tuition centre website concept that helps parents compare classes, check the weekly schedule and send enquiries straight to WhatsApp.",
+    objective:
+      "Tunas Minda Learning Centre wanted to look trustworthy to parents, answer common questions about subjects, timetables and fees upfront, and turn more website visitors into trial-class bookings.",
+    solution:
+      "We designed a bright, welcoming website with subjects by level, a filterable weekly class schedule, teacher profiles, clear monthly fees and a parent enquiry form that opens WhatsApp with the child's details prefilled, ready for an instant auto-reply.",
+    features: [
+      "Subjects & levels",
+      "Filterable class schedule",
+      "Teacher profiles",
+      "Monthly fees",
+      "Parent enquiry form",
+      "WhatsApp auto-reply ready",
+      "Google Maps",
+      "Responsive design",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Google Maps API"],
+    image: "/demos/tunas-minda/hero.jpg",
+    demo: "/demos/tunas-minda/index.html",
+  },
+  {
     slug: "business-management-system",
     name: "Business Management System",
     category: "Web Application",
