@@ -3,6 +3,7 @@ const whatsappNumber = "60199403681";
 export const siteConfig = {
   name: "SR Digital Solution",
   tagline: "Affordable Websites & Web Applications",
+  url: "https://srdigitalsolutions.netlify.app",
   email: "srdigitalsolutions22@gmail.com",
   location: "Malaysia",
   whatsappNumber,
