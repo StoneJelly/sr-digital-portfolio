@@ -4,11 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { homeHref, navLinks, siteConfig } from "@/data/site";
-import { GithubIcon, LinkedinIcon } from "./ui/icons";
+import { GithubIcon, InstagramIcon, LinkedinIcon } from "./ui/icons";
 import { BrandLogo } from "./ui/BrandMark";
 
 const socialLinks = [
   { icon: MessageCircle, href: siteConfig.whatsappUrl, label: "WhatsApp" },
+  { icon: InstagramIcon, href: siteConfig.instagramUrl, label: "Instagram" },
   { icon: GithubIcon, href: siteConfig.githubUrl, label: "GitHub" },
   { icon: LinkedinIcon, href: siteConfig.linkedinUrl, label: "LinkedIn" },
 ];

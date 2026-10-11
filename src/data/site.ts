@@ -10,6 +10,7 @@ export const siteConfig = {
   whatsappUrl: `https://wa.me/${whatsappNumber}`,
   whatsappQuoteUrl: `https://wa.me/${whatsappNumber}?text=Hi%20SR%20Digital%20Solution%2C%20I%27m%20interested%20in%20your%20web%20development%20services.`,
   whatsappFollowUpUrl: `https://wa.me/${whatsappNumber}?text=Hi%20SR%20Digital%20Solution%2C%20I%27ve%20just%20submitted%20a%20form%20enquiry.`,
+  instagramUrl: "https://www.instagram.com/srdigitalsolutions22/",
   githubUrl: "https://github.com/StoneJelly",
   linkedinUrl: "https://www.linkedin.com/in/sebastian-raj-a459bb282/",
 };
